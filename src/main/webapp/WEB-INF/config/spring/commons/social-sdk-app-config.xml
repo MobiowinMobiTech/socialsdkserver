@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-3.0.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-3.0.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-3.0.xsd
+		http://www.springframework.org/schema/integration/stream
+      	http://www.springframework.org/schema/integration/stream/spring-integration-stream-3.0.xsd
+      	http://www.springframework.org/schema/integration/ws
+      	http://www.springframework.org/schema/integration/ws/spring-integration-ws-3.0.xsd
+      	http://www.springframework.org/schema/util 
+      	http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- Application Configuration -->
+
+	<util:map id="systemSettings">
+		<entry key="version" value="1.0.0" />
+		<entry key="version-date" value="30-Mar-2016 02:55 PM" />
+	</util:map>
+
+	<bean id="applicationConfiguration" class="com.cmss.sdk.social.commons.ApplicationConfiguration"
+		scope="singleton">
+		<property name="configMap">
+			<map>
+				<entry key="message">
+					<map>
+						<entry key="successMessage" value="You are successfully registered" />
+						<entry key="failureMessage" value="Please Try Again" />
+						<entry key="unauthoriseMessage" value="User Authorisation Failed" />
+						<entry key="successLogoutMessage" value="User Successfully Delete Social Datas" />
+						<entry key="invalidTransactionMessage" value="Cannot process transaciton rite now...Try aftre some time" />
+						<entry key="invalidUserMessage" value="Kindly Register With Social Banking" />
+						<entry key="invalidBankMessage" value="Bank doesn't subscribe social channel" />
+					</map>
+				</entry>
+				
+				<entry key="fbapiparams">
+					<map>
+						<entry key="userpermission" value="taggable_friends" />
+						<entry key="debug" value="all" />
+						<entry key="format" value="json" />
+						<entry key="limit" value="100" />
+						<entry key="method" value="get" />
+						<entry key="pretty" value="0" />
+						<entry key="suppress_http_code" value="1" />
+						<entry key="fbbaseurl" value="https://graph.facebook.com/v2.5/" />
+					</map>
+				</entry>
+				
+				<entry key="fbstoryparams">
+					<map>
+						<entry key="fbgraphurl" value="https://graph.facebook.com/v2.5/" />
+						<entry key="appnamespace" value="socialsdkarun" />
+						<entry key="action" value="transfer" />
+						<entry key="fbstoryurl" value="http://122.170.2.209:8086/FaceBookConnect/meta.html" />
+					</map>
+				</entry>
+				
+				<entry key="bitlyparams">
+					<map>
+						<entry key="userid" value="o_3f3erbjo09" />
+						<entry key="apikey" value="R_bdb76a8f8b10422688610b1aa3bc294b" />
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="port" value="465" />
+		<property name="host" value="smtp.gmail.com" />
+		<property name="username" value="arun.jadhav@cmss.in" />
+		<property name="password" value="i m the best91" />
+		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.ssl.enable">true</prop>
+				<!-- <prop key="mail.smtp.starttls.enable">false</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="templateMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="mailmoney" />
+		<property name="subject" value="" />
+		<property name="text">
+			<value>
+			<![CDATA[
+			
+Dear %s,
+<br/>
+<br/>			
+Thank you for%s.
+<br/>
+<br/>	
+It was our pleasure assisting you  application.
+<br/>			
+<br/>
+<br/>			
+<br/>
+Hope to see you soon!
+<br/>
+<br/>					
+Thanks & Regards<br/>
+Arun Jadhav
+With lots of love
+<br/>
+<br/>
+
+(This is an auto generated email please do not reply to this id.) 
+			
+			
+			 	
+			]]>
+			</value>
+		</property>
+	</bean>
+
+	<bean id="mailReport" class="com.cmss.sdk.social.helper.service.MailMoneyNotificationService">
+		<property name="mailSender" ref="mailSender" />
+		<property name="templateMailMessage" ref="templateMailMessage" />
+	</bean>
+
+ </beans>

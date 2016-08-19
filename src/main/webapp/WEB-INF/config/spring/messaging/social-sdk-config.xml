@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration/stream
+      	http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
+      	http://www.springframework.org/schema/integration/ws
+      	http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd
+      	http://www.springframework.org/schema/util 
+      	http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<int:channel id="socialSdkInputChannel" />
+	<int:channel id="socialSdkOutputChannel" />
+	<int:channel id="requestRouterChannel" />
+
+	<int:service-activator input-channel="socialSdkInputChannel"
+		ref="messageReceiver" output-channel="requestRouterChannel" />
+
+	<!-- ##############Header Routing Processing ##################### -->
+
+	<int:header-value-router input-channel="requestRouterChannel"
+		header-name="module" id="moduleRouterId">
+		<int:mapping value="mobile" channel="mobileReqChannel" />
+		<int:mapping value="web" channel="webReqChannel" />
+	</int:header-value-router>
+
+	<int:header-value-router input-channel="mobileReqChannel"
+		header-name="channel" id="reqChannelRouterId">
+		<int:mapping value="socialbanking" channel="mobileSocialChannel" />
+	</int:header-value-router>
+
+	<int:header-value-router input-channel="mobileSocialChannel"
+		header-name="entity" id="mobileEntityRouterId">
+		<int:mapping value="banklogin" channel="bankLoginChannel" />
+		<int:mapping value="sociallogin" channel="tokenAuthChannel" />
+		<int:mapping value="accountinfo" channel="tokenAuthChannel" />
+		<int:mapping value="sociallogout" channel="tokenAuthChannel" />
+		<int:mapping value="submittransaction" channel="tokenAuthChannel" />
+		<int:mapping value="confirmtransaction" channel="tokenAuthChannel" />
+	</int:header-value-router>
+
+	<int:header-value-router input-channel="webReqChannel"
+		header-name="entity" id="webEntityRouterId">
+		<int:mapping value="validate" channel="custValidateChannel" />
+		<int:mapping value="login" channel="custLoginChannel" />
+		<int:mapping value="register" channel="webUserRegisterChannel" />
+		<int:mapping value="submittransaction" channel="tokenAuthChannel" />
+		<int:mapping value="confirmtransaction" channel="tokenAuthChannel" />
+
+		<int:mapping value="mailmoney" channel="mailAccountInfoChannel" />
+
+	</int:header-value-router>
+
+
+	<!-- ######################## Web validate Mail Money Request ################# -->
+	<int:service-activator ref="mailMoneyAccountService"
+		method="execute" input-channel="mailAccountInfoChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Web validate User Request ################# -->
+
+	<int:service-activator ref="custValidateService"
+		method="execute" input-channel="custValidateChannel" output-channel="custValidateResChannel" />
+
+	<int:header-value-router input-channel="custValidateResChannel"
+		header-name="isValid" id="custValidationReqId">
+		<int:mapping value="true" channel="custValidChannel" />
+		<int:mapping value="false" channel="custInvalidChannel" />
+	</int:header-value-router>
+
+	<int:header-value-router input-channel="custValidChannel"
+		header-name="socialchannel" id="custValidationReqId">
+		<int:mapping value="facebook" channel="authrizedCustChannel" />
+		<int:mapping value="twitter" channel="twitterAppChannel" />
+		<int:mapping value="mailmoney" channel="authrizedCustChannel" />
+		<int:mapping value="instagram" channel="authrizedCustChannel" />
+	</int:header-value-router>
+
+	<int:service-activator ref="twitterAppValidateService"
+		method="execute" input-channel="twitterAppChannel" output-channel="socialSdkOutputChannel" />
+
+	<int:service-activator ref="authoriseCustomerService"
+		method="execute" input-channel="authrizedCustChannel" output-channel="socialSdkOutputChannel" />
+
+	<int:service-activator ref="unauthoriseCustomerService"
+		method="execute" input-channel="custInvalidChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Web Customer Register Request ############ -->
+
+	<int:service-activator ref="userRegisterService"
+		method="execute" input-channel="webUserRegisterChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Web Customer Login Request ################ -->
+
+	<int:service-activator ref="webCustLoginService"
+		method="execute" input-channel="custLoginChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Mobile Bank Login Request ############ -->
+
+
+	<int:service-activator ref="bankLoginService"
+		method="execute" input-channel="bankLoginChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Social SDK Authentication ############ -->
+
+	<int:service-activator ref="socialAuthService"
+		method="execute" input-channel="tokenAuthChannel" output-channel="tokenValidationChannel" />
+
+	<!-- ######################## Auth Token FILTER ##################### -->
+
+	<int:header-value-router input-channel="tokenValidationChannel"
+		header-name="isValid" id="validationReqId">
+		<int:mapping value="true" channel="authoriseChannel" />
+		<int:mapping value="false" channel="unauthoriseChannel" />
+	</int:header-value-router>
+
+	<!-- ########################Social Channel Filter################ -->
+
+	<int:header-value-router input-channel="authoriseChannel"
+		header-name="reqheader" id="socialChannelHeaderId">
+
+		<int:mapping value="facebook_sociallogin" channel="facebookLoginChannel" />
+		<int:mapping value="twitter_sociallogin" channel="twitterLoginChannel" />
+		<int:mapping value="facebook_accountinfo" channel="accountInfoChannel" />
+		<int:mapping value="twitter_accountinfo" channel="accountInfoChannel" />
+		<int:mapping value="facebook_sociallogout" channel="socialLogoutChannel" />
+		<int:mapping value="facebook_submittransaction" channel="submitTransactionChannel" />
+		<int:mapping value="twitter_submittransaction" channel="submitTtransactionChannel" />
+		<int:mapping value="facebook_confirmtransaction" channel="confirmTransactionChannel" />
+		<int:mapping value="twitter_confirmtransaction" channel="confirmTransactionChannel" />
+		<int:mapping value="mail_confirmtransaction" channel="confirmTransactionChannel" />
+		<int:mapping value="mail_submittransaction" channel="submitTransactionChannel" />
+
+	</int:header-value-router>
+
+	<!-- ################## Facebook Authorize Access #################### -->
+	<int:service-activator ref="facebookDataFetchService"
+		method="execute" input-channel="facebookLoginChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ################## Customer Account Info ######################### -->
+
+	<int:service-activator ref="socialSdkAccountInfoService"
+		method="execute" input-channel="accountInfoChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ################## Mobile Social Channel Logout ############### -->
+
+	<int:service-activator ref="socialLogoutService"
+		method="execute" input-channel="socialLogoutChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ##################### Submit Transaction Channel##################### -->
+
+	<int:service-activator ref="submitTransactionService"
+		method="execute" input-channel="submitTransactionChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- ##################### Confirm Transaction Channel##################### -->
+
+	<int:service-activator ref="confirmTransactionService"
+		method="execute" input-channel="confirmTransactionChannel"
+		output-channel="socialSdkValidateTransactionChannel" />
+
+	<int:header-value-router input-channel="socialSdkValidateTransactionChannel"
+		header-name="isValid" id="confirmTransactionId">
+		<int:mapping value="true" channel="socialSdkNotificationChannel" />
+		<int:mapping value="false" channel="custInvalidChannel" />
+	</int:header-value-router>
+
+
+	<int:header-value-router input-channel="socialSdkNotificationChannel"
+		header-name="channelheader" id="socialChannelNotificationId">
+		<int:mapping value="facebook" channel="facebookNotificationChannel" />
+		<int:mapping value="mail" channel="mailMoneyNotificationChannel" />
+		<int:mapping value="twitter" channel="twitterNotificationChannel" />
+		<int:mapping value="instagram" channel="instagramNotificationChannel" />
+	</int:header-value-router>
+
+	<!-- Social Sdk Facebook Story Post Notification Service -->
+
+	<int:service-activator ref="facebookNotificationService"
+		method="execute" input-channel="facebookNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- Social Sdk Mail Money Notification Service -->
+
+	<int:service-activator ref="mailNotificationService"
+		method="execute" input-channel="mailMoneyNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- Social Sdk Twitter DM Notification Service -->
+
+	<int:service-activator ref="twitterNotificationService"
+		method="execute" input-channel="twitterNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
+
+
+	<!-- Social Sdk Instagram DM Notification Service -->
+
+	<int:service-activator ref="instagramNotificationService"
+		method="execute" input-channel="instagramNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
+
+
+	<!-- ################## UnAuthorize Access #################### -->
+
+	<int:service-activator ref="unAuthorizeAccessService"
+		method="execute" input-channel="unauthoriseChannel" output-channel="socialSdkOutputChannel" />
+
+	<int:outbound-channel-adapter ref="responseHandler"
+		channel="socialSdkOutputChannel" />
+
+</beans>
