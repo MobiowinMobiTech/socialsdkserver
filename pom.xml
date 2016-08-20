@@ -14,7 +14,7 @@
 		<mysql>5.1.39</mysql>
 		<twitter>4.0.4</twitter>
 		<slf4j>1.5.0</slf4j>
-		<log4j>2.6.1</log4j>
+		<log4j>1.2.17</log4j>
 		<json>20160810</json>
 		<fasterxml.jackson>2.6.1</fasterxml.jackson>
 		<httpclient>4.5.2</httpclient>
@@ -112,22 +112,12 @@
 		</dependency>
 
 		<!-- log4j -->
-		<!-- <dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
 			<version>${log4j}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>${log4j}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-web</artifactId>
-			<version>${log4j}</version>
-		</dependency> -->
-		
+
 		<!-- json -->
 		<dependency>
 			<groupId>org.json</groupId>
