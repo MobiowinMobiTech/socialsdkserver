@@ -13,7 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.json.JSONObject;
+import org.json.me.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,7 @@ public class AccountDetailService implements IAccountDetailService
 	@Autowired
 	private DefaultHttpClient httpClient;
 
+	@Override
 	public HashMap<String, Object> getCustomerAccountDeatils(String socialCustId)
 	{
 		log.info("Inside AccountDetailService/getCustomerAccountDeatils()");
@@ -118,10 +119,8 @@ public class AccountDetailService implements IAccountDetailService
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode != 200)
 			{
-				log.error("Exception in accessing rest webservice : "
-						+ statusCode);
-				throw new RuntimeException("Failed with HTTP error code : "
-						+ statusCode);
+				log.error("Exception in accessing rest webservice : " + statusCode);
+				throw new RuntimeException("Failed with HTTP error code : " + statusCode);
 			}
 
 			// Now pull back the response object
@@ -135,10 +134,7 @@ public class AccountDetailService implements IAccountDetailService
 			HashMap<String, Object> map = new HashMap<String, Object>();
 
 			// convert JSON string to Map
-			map = mapper.readValue(response,
-					new TypeReference<Map<String, Object>>()
-					{
-					});
+			map = mapper.readValue(response, new TypeReference<Map<String, Object>>(){});
 			// CustomerBankDetailsBean bankDetailsBean =
 			// mapper.readValue(response, CustomerBankDetailsBean.class);
 
@@ -160,8 +156,10 @@ public class AccountDetailService implements IAccountDetailService
 			log.error("Exception in getAccount Details : " + e.getMessage());
 		} finally
 		{
-			// Important: Close the connect
-			httpClient.getConnectionManager().shutdown();
+		
+		//  Important: Close the connect
+		//	httpClient.getConnectionManager().shutdown();
+			httpClient.getConnectionManager().closeExpiredConnections();
 		}
 
 		/*
@@ -171,12 +169,12 @@ public class AccountDetailService implements IAccountDetailService
 		return null;
 	}
 
+	@Override
 	public String generateResponse(HashMap<String, Object> custBankDetails)
 	{
 		log.info("Inside AccountDetailService / generateResponse()");
 
-		HashMap<String, Object> customerAccountDeatailsMap = SocialSdkMsgUtil
-				.createSuccessResponseMessage(custBankDetails);
+		HashMap<String, Object> customerAccountDeatailsMap = SocialSdkMsgUtil.createSuccessResponseMessage(custBankDetails);
 
 		return SocialSdkMsgUtil.createJSONFromMap(customerAccountDeatailsMap);
 		

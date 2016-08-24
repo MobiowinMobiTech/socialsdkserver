@@ -32,20 +32,23 @@ public class SocialSdkDateConvertorUtil
 		{
 			Date currentDate = new Date();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date tokenExpiryDate = format
-					.parse(convertDateToString(currentDate));
+			Date tokenExpiryDate = format.parse(convertDateToString(currentDate));
 			tokenExpiryDate = addDays(tokenExpiryDate, 2);
 			
 			log.info("Token Expiry Date is : " + tokenExpiryDate);
 			
 			return tokenExpiryDate;
+			
 		} catch (ParseException e)
 		{
 			log.error("Exception in Date parsing " + e.getMessage());
+			
 			return null;
+			
 		} catch (Exception e)
 		{
 			log.error("Exception in Token  " + e.getMessage());
+			
 			return null;
 		}
 

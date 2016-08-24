@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.integration.MessageChannel;
+import org.springframework.integration.support.MessageBuilder;
 
 import com.cmss.sdk.social.commons.ApplicationConstants;
 
@@ -92,14 +92,15 @@ public class SocialSdkMsgProcessUtil
 	}
 
 
-	public static void sendGenericErrorMessage(HttpServletResponse response,
-			ApplicationContext applicationContext)
+	public static void sendGenericErrorMessage(HttpServletResponse response, ApplicationContext applicationContext)
 	{
 		log.info("Inside SocialSdkMsgProcessUtil / sendGenericErrorMessage()");
 		
 		String errMsg = "Some Thing Goes Bad..... Please Try After Some Time";
+		
 		MessageChannel deviceResponseChannel = (MessageChannel) applicationContext
 				.getBean(ApplicationConstants.Keys.SOCIAL_SDK_OUTPUT_CHANNEL);
+		
 		deviceResponseChannel.send(MessageBuilder
 				.withPayload(SocialSdkMsgUtil.createErrorMessage(errMsg))
 				.setHeader(ApplicationConstants.Keys.RESPONSE, response).build());
@@ -124,15 +125,13 @@ public class SocialSdkMsgProcessUtil
 		 * For web social sdk server testing
 		 * */
 		
-		headerMap.put("module", "mobile");
+//		headerMap.put("module", "web");
 
 		
 		if(log.isInfoEnabled())
 		{
 			log.info("Request Http Headers : " + headerMap.toString());
 		}
-		
-		
 		return headerMap;
 	}
 	

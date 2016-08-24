@@ -1,6 +1,6 @@
 package com.cmss.sdk.social.core.messaging;
 
-import org.springframework.messaging.Message;
+import org.springframework.integration.Message;
 
 public interface ISocialSdkService
 {

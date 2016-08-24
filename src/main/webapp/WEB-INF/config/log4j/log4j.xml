@@ -8,7 +8,7 @@
 		</layout>
 	</appender>
 	<appender name="dailyroll" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="WebContent/WEB-INF/log4j_logs/logs.log" />
+		<param name="file" value="/home/cmss/Pradeep/BackUp/SocailSDkBackup/socialsdk_log/logs.log" />
 		<param name="append" value="true" />
 		<param name="encoding" value="UTF-8" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />

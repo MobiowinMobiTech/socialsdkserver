@@ -5,17 +5,18 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.integration.Message;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.cmss.sdk.social.commons.ApplicationConfiguration;
 import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
+import com.cmss.sdk.social.helper.service.IAccountDetailService;
 import com.cmss.sdk.social.helper.service.IMailMoneyHelperService;
 import com.cmss.sdk.social.helper.service.IValidationService;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
@@ -35,6 +36,7 @@ public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
 	@Autowired
 	private IMailMoneyHelperService mailMoneyHelperService;
 
+	@Override
 	public Message<String> execute(Message<String> message) {
 
 		log.info("Inside SocailSdkMailMoneyAccountService/execute()..");
@@ -66,14 +68,13 @@ public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
 				log.info("Customer Data   : " + customerDataJson);
 				log.info("Bank Customer Id is : " + bankCustId);
 				log.info("Bank Id : " + bankId);
-				
 			}
 
 			custoemrDataMap = getCustomerDataMap(bankCustId, bankId);
 
 			boolean isValidBankSubscription = validationService.validateBankSocialChannelSubscription(custoemrDataMap);
 
-			log.info("Is bank Subscribe for  Social Channel : " + isValidBankSubscription);
+			log.info("Is bank Subscribe for Social Channel : " + isValidBankSubscription);
 			
 			if (isValidBankSubscription) 
 			{
@@ -113,7 +114,6 @@ public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
 
 				return MessageBuilder.withPayload(response).build();
 			}
-
 		}
 		catch (JSONException e)
 		{

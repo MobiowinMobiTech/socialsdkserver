@@ -5,6 +5,8 @@ public class FriendListBean
 	private String friendId;
     private String friendName;
     private String imageURL;
+    
+    
 	public String getFriendId()
 	{
 		return friendId;

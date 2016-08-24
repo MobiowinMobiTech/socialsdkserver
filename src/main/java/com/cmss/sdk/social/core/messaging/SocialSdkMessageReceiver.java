@@ -4,10 +4,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
+import org.springframework.integration.Message;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,7 @@ public class SocialSdkMessageReceiver implements ISocialSdkMessageReceiver
 	
 	private Log log = LogFactory.getLog(this.getClass());
 
+	@Override
 	public Message<String> receive(Message<String> message)
 	{
 		try 
@@ -26,7 +27,9 @@ public class SocialSdkMessageReceiver implements ISocialSdkMessageReceiver
 			Map<String, Object> messageHeader = message.getHeaders();
 
 			String messageData = message.getPayload();
+			
 			JSONObject messageObj = new JSONObject(messageData);
+			
 			String channel = messageObj.getString(ApplicationConstants.Keys.CHANNEL);
 			String entity =  messageObj.getString(ApplicationConstants.Keys.ENTITY);
 			String moduleName = (String) messageHeader.get(ApplicationConstants.Keys.REQUEST_MODULE);
@@ -39,21 +42,16 @@ public class SocialSdkMessageReceiver implements ISocialSdkMessageReceiver
 				log.info("Request Message module is ------------ > " + moduleName);
 			}
 			
-			
-
 			return MessageBuilder
 					.withPayload(message.getPayload())
 					.copyHeaders(message.getHeaders())
-					.setHeader(ApplicationConstants.Keys.REQUEST_MODULE, moduleName)
+					.setHeader(ApplicationConstants.Keys.REQUEST_MODULE, ApplicationConstants.Keys.MODULE_WEB)
 					.setHeader(ApplicationConstants.Keys.CHANNEL, channel)
 					.setHeader(ApplicationConstants.Keys.ENTITY, entity).build();
-
 		}
 		catch (JSONException e)
 		{
-			log.error(
-					"Exception in JSON Message building ..... "
-							+ e.getMessage(), e.getCause());
+			log.error("Exception in JSON Message building ..... "+ e.getMessage(), e.getCause());
 			e.printStackTrace();
 			return null;
 		}

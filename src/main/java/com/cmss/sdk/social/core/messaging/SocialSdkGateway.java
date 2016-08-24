@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.integration.MessageChannel;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cmss.sdk.social.commons.ApplicationConstants;
@@ -25,9 +25,7 @@ import com.cmss.sdk.social.utility.SocialSdkMsgProcessUtil;
 public class SocialSdkGateway extends HttpServlet
 {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private Log log = LogFactory.getLog(this.getClass());
@@ -42,20 +40,16 @@ public class SocialSdkGateway extends HttpServlet
 			HttpServletResponse response) throws ServletException, IOException
 	{
 
-		ApplicationContext applicationContext = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(getServletContext());
+		ApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 
 		@SuppressWarnings("unchecked")
-		Map<String, String> systemSettings = applicationContext
-				.getBean(ApplicationConstants.Keys.SOCIAL_SDK_SYSTEM_SETTINGS,
-						Map.class);
+		Map<String, String> systemSettings = applicationContext.getBean(ApplicationConstants.Keys.SOCIAL_SDK_SYSTEM_SETTINGS,Map.class);
 
 		StringBuilder systemInfo = new StringBuilder("System Settings : ");
 
 		for (String key : systemSettings.keySet())
 		{
-			systemInfo.append("\n").append(key).append("\n")
-					.append(systemSettings.get(key));
+			systemInfo.append("\n").append(key).append("\n").append(systemSettings.get(key));
 		}
 
 		systemInfo.append("\n");
@@ -64,9 +58,7 @@ public class SocialSdkGateway extends HttpServlet
 		{
 			log.info("System Info is :  " + systemInfo);
 		}
-
 		response.getOutputStream().write(systemInfo.toString().getBytes());
-
 	}
 
 	@Override
@@ -81,12 +73,9 @@ public class SocialSdkGateway extends HttpServlet
 			HttpSession session = request.getSession();
 			String data = readBody(request);
 
-			Map<String, String> headerMap = SocialSdkMsgProcessUtil
-					.createHeaderMap(request);
+			Map<String, String> headerMap = SocialSdkMsgProcessUtil.createHeaderMap(request);
 
-			
-
-				SocialSdkMsgProcessUtil.readQueryString(request);
+			SocialSdkMsgProcessUtil.readQueryString(request);
 
 				if (null != data)
 				{
@@ -97,34 +86,22 @@ public class SocialSdkGateway extends HttpServlet
 						log.info("Module is ------------------> " + headerMap.get(ApplicationConstants.Keys.REQUEST_MODULE));
 						
 					}
+					MessageChannel socialSdkIputChannel = (MessageChannel) applicationContext.getBean(ApplicationConstants.Keys.SOCIAL_SDK_INPUT_CHANNEL);
 
-					MessageChannel socialSdkIputChannel = (MessageChannel) applicationContext
-							.getBean(ApplicationConstants.Keys.SOCIAL_SDK_INPUT_CHANNEL);
-
-					MessageBuilder<?> messageBuilder = MessageBuilder
-							.withPayload(data).setHeader(
-									ApplicationConstants.Keys.RESPONSE,
-									response);
+					MessageBuilder<?> messageBuilder = MessageBuilder.withPayload(data).setHeader(ApplicationConstants.Keys.RESPONSE, response);
 					
-					messageBuilder.setHeader(ApplicationConstants.Keys.REQUEST,
-							request);
+					messageBuilder.setHeader(ApplicationConstants.Keys.REQUEST,	request);
 					
-					messageBuilder.setHeader(ApplicationConstants.Keys.REQUEST_MODULE,
-							headerMap.get(ApplicationConstants.Keys.REQUEST_MODULE));
-
+					messageBuilder.setHeader(ApplicationConstants.Keys.REQUEST_MODULE, headerMap.get(ApplicationConstants.Keys.REQUEST_MODULE));
 
 					socialSdkIputChannel.send(messageBuilder.build());
 				}
-
-			
 		} catch (Exception e)
 		{
+			e.printStackTrace();
 			log.error("Exception in reading message ......." + e.getMessage());
-			SocialSdkMsgProcessUtil.sendGenericErrorMessage(response,
-					applicationContext);
-
+			SocialSdkMsgProcessUtil.sendGenericErrorMessage(response,applicationContext);
 		}
-
 	}
 
 	/*
@@ -177,6 +154,7 @@ public class SocialSdkGateway extends HttpServlet
 			log.info("data is ----- > " + data);
 
 			return data;
+			
 		} catch (UnsupportedEncodingException e)
 		{
 			log.error("Encoding exception ............. " + e.getMessage());

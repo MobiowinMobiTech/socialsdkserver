@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public interface IValidationService
 {
-
 	boolean validateBankSocialChannelSubscription(HashMap<String,String> custoemrDataMap);
 
 	boolean validateCustomer(HashMap<String, String> custoemrDataMap);

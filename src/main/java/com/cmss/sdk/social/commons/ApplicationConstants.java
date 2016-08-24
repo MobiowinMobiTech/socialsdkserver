@@ -86,6 +86,8 @@ public class ApplicationConstants
 		
 		public static final String ACCOUNT_INDEX_ID = "accountid";
 		
+		public static final String ACCOUNT_DETAIL_LIST = "accountDetailList";
+		
 		public static final String TRANSACTION_AMOUNT = "amount";
 		
 		public static final String REQUEST_HEADERS = "reqheader";
@@ -122,6 +124,14 @@ public class ApplicationConstants
 		
 		public static final String SUCCESS_TRANSACTION_MSG = "successfulTransactionMessage";
 		
+		public static final String MODULE_WEB = "web";
+		
+		public static final String CUSTOMER_SOCIAL_NAME = "name";
+		
+		public static final String  FB_CUSTOMER_LONG_ACCESS_TOKEN = "longaccesstoken";
+		
+		
+		
 	}
 	
 	public interface Value
@@ -134,6 +144,8 @@ public class ApplicationConstants
 	public interface FbApiKeys
 	{
 		public static final String FB_API_BASE_URL = "fbbaseurl";
+		
+		public static final String BASE_URL = "baseurl";
 		
 		public static final String FB_API_PARAM = "fbapiparams";
 		
@@ -162,6 +174,22 @@ public class ApplicationConstants
 		public static final String URL = "url";
 		
 		public static final String PICTURE = "picture";
+		
+		public static final String FB_APP_ID = "client_id";
+		
+		public static final String FB_APP_SECRET = "fbappsecret";
+		
+		public static final String FB_APP_CALL_BACK_URI = "redirect_uri";
+		
+		public static final String FB_APP_API_VERSION = "fbapiversion";
+		
+		public static final String FB_APP_PERMISSION_SCOPE = "scope";
+		
+		public static final String FB_APP_AUTH_URL = "facebookappauthurl";
+		
+		public static final String FB_APP_AUTH_CODE = "code";
+		
+		
 	}
 	
 	public interface FbStoryParams
@@ -180,8 +208,43 @@ public class ApplicationConstants
 
 	public interface TwitterApiKeys
 	{
-	   public static boolean USE_PROXY = true;
+		public static final String TWITTER_API_KEY = "twitterparams";
 		
-	   public static final String BANK_ACCOUNT_TYPE= "TWITTER_BANKING";
+		public static final String TWITTER_COUNSUMER_KEY = "consumerKey";
+	   
+	   public static final String TWITTER_COUNSUMER_SECRET_KEY = "consumerSecret";
+	   
+	   public static final String TWITTER_APP_ID = "appId";
+	   
+	   public static final String TWITTER_CALLBACK_URL = "callbackUrl";
+	}
+	
+	public interface TwitterRegKeys
+	{
+		public static final String TWITTER_ACCESS_TOKEN = "accessToken";
+		
+		public static final String TWITTER_ACCESS_TOKEN_SECRET = "accessTokenSecret";
+		
+		public static final String TWITTER_TOKEN = "token";
+		
+		public static final String TWITTER_REQUEST_TOKEN = "reqToken";
+		
+		public static final String TWITTER_REQUEST_TOKEN_SECRET = "tokenSecret";
+		
+		public static final String TWITTER_OAUTH_VERIFIER = "authverifier";
+		
+		public static final String TWITTER_FRIEND_LIST = "friendlist";
+		
+		public static final String TWITTER_ID = "id";
+		
+		public static final String TWITTER_NAME = "username";
+		
+		public static final String TWITTER_SCREEN_NAME = "screenname";
+		
+		public static final String TWITTER_IMAGE_URL = "imageurl";
+		
+		public static final String PICTURE = "picture";
+		
+		public static final String TWITTER_REG_URL = "twitterregurl";
 	}
 }

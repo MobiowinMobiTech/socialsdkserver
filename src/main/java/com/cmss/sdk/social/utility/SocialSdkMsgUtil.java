@@ -25,6 +25,7 @@ public class SocialSdkMsgUtil
 			objectMapper.writeValue(baos, dataMap);
 
 			return baos.toString();
+			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -34,7 +35,6 @@ public class SocialSdkMsgUtil
 	
 	public static String createErrorMessage(String errMsg)
 	{
-
 		try
 		{
 			Map<String, Object> errorMap = new HashMap<String, Object>();
@@ -62,7 +62,6 @@ public class SocialSdkMsgUtil
 	
 	public static String createSuccessMessage(String successMsg)
 	{
-
 		try
 		{
 			Map<String, Object> successResMap = new HashMap<String, Object>();
@@ -81,6 +80,7 @@ public class SocialSdkMsgUtil
 			objectMapper.writeValue(baos, successResMap);
 
 			return baos.toString();
+			
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -88,23 +88,20 @@ public class SocialSdkMsgUtil
 		}
 	}
 	
-	public static HashMap<String, Object> createSuccessResponseMessage(
-			HashMap<String, Object> responseMap)
+	public static HashMap<String, Object> createSuccessResponseMessage(HashMap<String, Object> responseMap)
 	{
 
 		HashMap<String, Object> dataMap = new HashMap<String, Object>();
 
 		dataMap.put(ApplicationConstants.Keys.STATUS, ApplicationConstants.Value.SUCCESS);
-		dataMap.put(ApplicationConstants.Keys.MESSAGE,
-				String.valueOf(System.currentTimeMillis()));
+		dataMap.put(ApplicationConstants.Keys.MESSAGE,	String.valueOf(System.currentTimeMillis()));
 		dataMap.put(ApplicationConstants.Keys.DATA, responseMap);
 
 		return dataMap;
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static HashMap<String, Object> createResponseMessage(
-			final List<HashMap> dataMapList)
+	public static HashMap<String, Object> createResponseMessage(final List<HashMap> dataMapList)
 	{
 		HashMap<String, Object> dataMap = new HashMap<String, Object>();
 
@@ -114,7 +111,6 @@ public class SocialSdkMsgUtil
 		{
 			dataMap.put(ApplicationConstants.Keys.MESSAGE, "Data submitted successfully");
 		}
-
 		else
 		{
 			dataMap.put(ApplicationConstants.Keys.MESSAGE, "");

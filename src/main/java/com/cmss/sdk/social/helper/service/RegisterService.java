@@ -14,38 +14,63 @@ import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
 @Service("registerService")
 @Component
-public class RegisterService implements IRegisterService
-{
+public class RegisterService implements IRegisterService {
 	private Log log = LogFactory.getLog(this.getClass());
-	
-	public String generateResponse(HashMap<String, String> socialUserDataMap,
-			HashMap<String, String> customerTokenMap,
-			List<FriendListBean> friendList,
-			HashMap<String, Object> custBankDetailMap)
+
+	@Override
+	public String generateTwitterResponse(HashMap<String, String> customerTokenMap, HashMap<String, Object> twitterFriendDataMap,
+			HashMap<String, Object> custBankDetailMap) 
 	{
-		log.info("Inside RegisterService/generateResponse()");
+	
+		log.info("Inside RegisterService / generateTwitterResponse()");
 		
-		//final List<HashMap<String, Object>> custResMapList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String,Object> responseMap = null;
 		HashMap<String, Object> custDataResMap = null;
 		
 		responseMap = new HashMap<String, Object>();
-		/*responseMap.put(ApplicationConstants.Keys.CUST_BANK_ID, custBankDetailMap.get(ApplicationConstants.Keys.CUST_BANK_ID));*/
-		responseMap.put(ApplicationConstants.Keys.CUST_FRIEND_DATA, friendList);
+		responseMap.put(ApplicationConstants.TwitterRegKeys.TWITTER_FRIEND_LIST, twitterFriendDataMap.get(ApplicationConstants.TwitterRegKeys.TWITTER_FRIEND_LIST.toString()));
 		responseMap.put(ApplicationConstants.Keys.AUTH_DATA, customerTokenMap);
-		responseMap.put(ApplicationConstants.Keys.CUST_ACCOUNT_DETAILS, custBankDetailMap.get("accountDetailList"));
-		
+		responseMap.put(ApplicationConstants.Keys.CUST_ACCOUNT_DETAILS, custBankDetailMap.get(ApplicationConstants.Keys.ACCOUNT_DETAIL_LIST));
+	
 		custDataResMap = SocialSdkMsgUtil.createSuccessResponseMessage(responseMap);
-
-		//String response = 
 		
 		return SocialSdkMsgUtil.createJSONFromMap(custDataResMap);
-		
-		
-		
-		
-		//return SocialSdkMsgUtil.createJSONFromMap(SocialSdkMsgUtil.createSuccessResponseMessage(responseMap));
-		
 	}
 
+	@Override
+	public String generateFacebookResponse(HashMap<String, String> socialUserDataMap,
+			HashMap<String, String> customerTokenMap, List<FriendListBean> friendList,
+			HashMap<String, Object> custBankDetailMap) {
+
+		log.info("Inside RegisterService / generateFacebookResponse()");
+
+		HashMap<String, Object> responseMap = null;
+		HashMap<String, Object> custDataResMap = null;
+
+		responseMap = new HashMap<String, Object>();
+		responseMap.put(ApplicationConstants.Keys.CUST_FRIEND_DATA, friendList);
+		responseMap.put(ApplicationConstants.Keys.AUTH_DATA, customerTokenMap);
+		responseMap.put(ApplicationConstants.Keys.CUST_ACCOUNT_DETAILS,	custBankDetailMap.get(ApplicationConstants.Keys.ACCOUNT_DETAIL_LIST));
+
+		custDataResMap = SocialSdkMsgUtil.createSuccessResponseMessage(responseMap);
+
+		return SocialSdkMsgUtil.createJSONFromMap(custDataResMap);
+	}
+
+	@Override
+	public String generateMobileFacebookResponse(HashMap<String, String> socialUserDataMap,
+			HashMap<String, String> customerTokenMap, List<FriendListBean> friendList) {
+		log.info("Inside RegisterService / generateMobileFacebookResponse()");
+
+		HashMap<String, Object> responseMap = null;
+		HashMap<String, Object> custDataResMap = null;
+
+		responseMap = new HashMap<String, Object>();
+		responseMap.put(ApplicationConstants.Keys.CUST_FRIEND_DATA, friendList);
+		responseMap.put(ApplicationConstants.Keys.AUTH_DATA, customerTokenMap);
+
+		custDataResMap = SocialSdkMsgUtil.createSuccessResponseMessage(responseMap);
+
+		return SocialSdkMsgUtil.createJSONFromMap(custDataResMap);
+	}
 }

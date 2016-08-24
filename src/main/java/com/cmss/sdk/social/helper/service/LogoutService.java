@@ -26,6 +26,7 @@ public class LogoutService implements ILogoutService
 	@Autowired
 	private ApplicationConfiguration<String, HashMap<String, String>> applicationConfig;
 	
+	@Override
 	public String deleteCustSocialData(HashMap<String, String> socialUserDataMap)
 	{
 		log.info("Inside LogoutService/deleteCustSocialData()");

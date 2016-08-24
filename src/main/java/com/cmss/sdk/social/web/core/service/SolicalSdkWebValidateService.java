@@ -42,7 +42,7 @@ public class SolicalSdkWebValidateService implements ISocialSdkService
 		JSONObject validateCustomerDataJson = null;
 		JSONObject customerDataJson = null;
 
-		String bankCustId,bankId = null;
+		String bankCustId=null,bankId=null,channel = null;
 		String response = null;
 		HashMap<String,String> custoemrDataMap = null;
 
@@ -59,11 +59,13 @@ public class SolicalSdkWebValidateService implements ISocialSdkService
 
 			bankCustId = customerDataJson.getString(ApplicationConstants.Keys.CUST_BANK_ID);
 			bankId = customerDataJson.getString(ApplicationConstants.Keys.BANK_ID);
+			channel = customerDataJson.getString(ApplicationConstants.Keys.CHANNEL);
 			
 			if(log.isInfoEnabled())
 			{
 				log.info("Bank Customer Id is : " + bankCustId);
 				log.info("Bank Id : " + bankId);
+				log.info("channel : " + channel);
 			} 
 			
 			custoemrDataMap = getCustomerDataMap(bankCustId,bankId);
@@ -79,6 +81,7 @@ public class SolicalSdkWebValidateService implements ISocialSdkService
 					return MessageBuilder.withPayload(message.getPayload())
 							.copyHeaders(message.getHeaders())
 							.setHeader(ApplicationConstants.Keys.IS_VALID,isValid)
+							.setHeader(ApplicationConstants.Keys.SOCIAL_CHANNEL_TYPE,channel)
 							.build();
 				}
 				else

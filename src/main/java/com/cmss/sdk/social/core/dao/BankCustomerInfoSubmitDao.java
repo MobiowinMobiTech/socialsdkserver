@@ -16,9 +16,8 @@ public class BankCustomerInfoSubmitDao implements IBankCustomerInfoSubmitDao
 
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public HashMap<String, Object> submitCustomerData(
-			HashMap<String, String> bankLoginReqDataMap,
-			HashMap<String, String> customerTokenMap)
+	@Override
+	public HashMap<String, Object> submitCustomerData(HashMap<String, String> bankLoginReqDataMap,	HashMap<String, String> customerTokenMap)
 	{
 		
 		/*
@@ -28,7 +27,7 @@ public class BankCustomerInfoSubmitDao implements IBankCustomerInfoSubmitDao
 		 * 3. auth token expiry
 		 * 4. bankid
 		 * 
-		 * */
+		 */
 		
 		HashMap<String, Object> custSocialTokenResMap = null;
 
@@ -46,20 +45,20 @@ public class BankCustomerInfoSubmitDao implements IBankCustomerInfoSubmitDao
 		{
 			custSocialTokenResMap = new HashMap<String, Object>();
 			custSocialTokenResMap.put(ApplicationConstants.Keys.CUST_REQ_TOKEN, customerTokenMap.get(ApplicationConstants.Keys.CUST_REQ_TOKEN));
-			custSocialTokenResMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN,customerTokenMap.get(ApplicationConstants.Keys.CUST_AUTH_TOKEN));
-			custSocialTokenResMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT,customerTokenMap.get(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT));
+			custSocialTokenResMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN, customerTokenMap.get(ApplicationConstants.Keys.CUST_AUTH_TOKEN));
+			custSocialTokenResMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT, customerTokenMap.get(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT));
 			
-
 			return custSocialTokenResMap;
+			
 		} catch (Exception e)
 		{
-
-			log.info(
-					"Exeption in BankCustomerInfoSubmitDao / submitCustomerData() "
-							+ e.getMessage(), e.getCause());
+			log.info("Exeption in BankCustomerInfoSubmitDao / submitCustomerData() "+ e.getMessage(), e.getCause());
+			
 			custSocialTokenResMap = new HashMap<String, Object>();
-			custSocialTokenResMap.put("SocialSdkAmessage","Somthing wrong with your Data");
-			return custSocialTokenResMap;
+			
+			custSocialTokenResMap.put("SocialSdkAmessage","Something wrong with your Data");
+			
+			return custSocialTokenResMap;			
 		}
 	}
 

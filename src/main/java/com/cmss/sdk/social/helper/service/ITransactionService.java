@@ -14,7 +14,7 @@ public interface ITransactionService
 
 	String genearteTransactionReponse();
 
-	String validateTransactionData(
+	boolean validateTransactionData(
 			HashMap<String, String> socialTransactionDataMap);
 
 }

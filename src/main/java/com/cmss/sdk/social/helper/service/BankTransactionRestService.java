@@ -32,6 +32,7 @@ public class BankTransactionRestService implements ITransactionRestService
 	@Autowired
 	private DefaultHttpClient httpClient;
 
+	@Override
 	public String validateCustmerTransactionData(
 			HashMap<String, String> socialTransactionDataMap)
 	{
@@ -44,8 +45,7 @@ public class BankTransactionRestService implements ITransactionRestService
 		try
 		{
 			HttpPost postRequest = new HttpPost(
-					//"http://localhost:8080/SocialSdkTestApp/rest/validatedetails/validatetransaction/");
-					"http://192.168.0.80:8086/SocialSdkTestApp/rest/validatedetails/validatetransaction/");
+					"http://localhost:8080/SocialSdkTestApp/rest/validatedetails/validatetransaction/");
 
 			postRequest.addHeader(
 					ApplicationConstants.Keys.REQUEST_ACCEPT_HEADER,
@@ -104,6 +104,7 @@ public class BankTransactionRestService implements ITransactionRestService
 		return null;
 	}
 
+	@Override
 	public String validateTransactionData(
 			HashMap<String, String> socialTransactionDataMap)
 	{
@@ -116,7 +117,7 @@ public class BankTransactionRestService implements ITransactionRestService
 		try
 		{
 			HttpPost postRequest = new HttpPost(
-					"http://192.168.0.80:8086/SocialSdkTestApp/rest/validatedetails/confirmtransaction/");
+					"http://localhost:8080/SocialSdkTestApp/rest/validatedetails/confirmtransaction/");
 
 			postRequest.addHeader(
 					ApplicationConstants.Keys.REQUEST_ACCEPT_HEADER,

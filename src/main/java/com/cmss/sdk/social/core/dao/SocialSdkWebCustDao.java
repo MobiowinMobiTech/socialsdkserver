@@ -17,6 +17,7 @@ public class SocialSdkWebCustDao implements ISocialSdkWebCustDao
 
 	private Log log = LogFactory.getLog(this.getClass());
 
+	@Override
 	public List<String> fetchCustomerSocialDetails(CustomerBean custBean)
 	{
 		log.info("Inside SocialSdkWebCustDao/fetchCustomerSocialDetails");

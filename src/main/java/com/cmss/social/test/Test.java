@@ -16,17 +16,14 @@ public class Test
 
 	public static void main(String[] args) throws MalformedURLException
 	{
-		String serverURL = "http://192.168.0.80:8086/SocialSdkServer/";
+		String serverURL = "http://localhost:8080/SocialSdkServer/";
 		String servletUrl = "SocialSdkGateway";
-		
-		///http://192.168.0.80:8086/SocialSdkServer/SocialSdkGateway
 		/*
 		 * String serverURL = "http://localhost:8080/SocialSdkTestApp/"; String
 		 * servletUrl = "MobileBankingServlet";
 		 */
 		String res;
-		res = sendRequest("",
-				new URL(getUrl(serverURL, servletUrl, "", "", "", "")));
+		res = sendRequest("", new URL(getUrl(serverURL, servletUrl, "", "", "", "")));
 		System.out.println("RESPONSE is " + res);
 	}
 
@@ -79,8 +76,7 @@ public class Test
 			{
 				ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
 
-				streamReader = new InputStreamReader(
-						connection.getInputStream());
+				streamReader = new InputStreamReader(connection.getInputStream());
 
 				int charRead;
 
@@ -93,8 +89,7 @@ public class Test
 
 				System.out.println("ResponseCode : "
 						+ connection.getResponseCode());
-				System.out.println("ResponseMessage : "
-						+ connection.getResponseMessage());
+				System.out.println("ResponseMessage : "	+ connection.getResponseMessage());
 
 				for (int i = 0;; i++)
 				{
@@ -138,10 +133,8 @@ public class Test
 		BufferedReader input = null;
 		try
 		{
-
-			
 			//String path = "D:/Users/Raman/Desktop/RND_Topics/CMSS/Social SDK/SocialSdk_Reqs/bankloginreq.txt";
-			String path = "D:/Users/Raman/Desktop/RND_Topics/CMSS/Social SDK/SocialSdk_Reqs/mobile/submittransactionreq.txt";
+			String path = "/home/arun/confirmTransaction.txt";
 			FileReader fileReader = new FileReader(path);
 			input = new BufferedReader(fileReader);
 
@@ -164,7 +157,6 @@ public class Test
 		{
 			if (input != null)
 			{
-
 				try
 				{
 					input.close();
@@ -173,7 +165,6 @@ public class Test
 
 					e.printStackTrace();
 				}
-
 			}
 		}
 		return null;

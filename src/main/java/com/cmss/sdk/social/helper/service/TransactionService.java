@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,7 @@ import com.cmss.sdk.social.utility.SocialSdkTransactionUtil;
 
 @Service("transactionService")
 @Component
-public class TransactionService implements ITransactionService
-{
+public class TransactionService implements ITransactionService {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
@@ -28,49 +27,42 @@ public class TransactionService implements ITransactionService
 
 	@Autowired
 	private ITransactionRestService transactionRestService;
-	
+
 	@Autowired
 	private SocialSdkFbPostService fbStoryPostService;
 
-	public String getBankCustomerId(String authToken)
-	{
+	@Override
+	public String getBankCustomerId(String authToken) {
 		log.info("Inside TransactionService / getBankCustomerId()");
 
-		String customerBankId = socialSdkTransactionDao
-				.getCustomerBankId(authToken);
+		String customerBankId = socialSdkTransactionDao.getCustomerBankId(authToken);
 
 		return customerBankId;
 	}
 
-	public String validateCustomerTransactionData(
-			HashMap<String, String> socialTransactionDataMap)
-	{
+	@Override
+	public String validateCustomerTransactionData(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService/validateCustomerTransactionData()");
 
 		JSONObject bankResponseJson = null;
-		
+
 		String socialTransactionId = SocialSdkTransactionUtil.generateSocialSdkTransId(socialTransactionDataMap);
-		
+
 		socialTransactionDataMap.put(ApplicationConstants.Keys.SOCIAL_TRANSACTION_ID, socialTransactionId);
-		
-		String bankResponse = transactionRestService
-				.validateCustmerTransactionData(socialTransactionDataMap);
-		
+
+		String bankResponse = transactionRestService.validateCustmerTransactionData(socialTransactionDataMap);
+
 		String status = "failure";
 
 		log.info("Bank Response : " + bankResponse);
 
-		try
-		{
+		try {
 			bankResponseJson = new JSONObject(bankResponse);
-			status = bankResponseJson
-					.getString(ApplicationConstants.Keys.STATUS);
+			status = bankResponseJson.getString(ApplicationConstants.Keys.STATUS);
 			return status;
 
-		} catch (JSONException e)
-		{
-			log.error("Exception in validateCustomerTransactionData() : "
-					+ e.getMessage());
+		} catch (JSONException e) {
+			log.error("Exception in validateCustomerTransactionData() : " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -78,22 +70,17 @@ public class TransactionService implements ITransactionService
 
 	}
 
-	public boolean generateTransactionOtp(
-			HashMap<String, String> socialTransactionDataMap)
-	{
+	@Override
+	public boolean generateTransactionOtp(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService / generateTransactionOtp()");
 
-		/*
-		 * 
-		 * Rest call to bank service to generate OTP
-		 */
-
-		return true;
+			return true;
 
 	}
 
-	public String genearteTransactionReponse()
-	{
+	@Override
+	public String genearteTransactionReponse() {
+		
 		final List<HashMap<String, Object>> transactionResMapList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> custTransationDataResMap = null;
 
@@ -101,51 +88,44 @@ public class TransactionService implements ITransactionService
 
 		transactionResMapList.add(customerInfoSubmitResMap);
 
-		custTransationDataResMap = SocialSdkMsgUtil
-				.createSuccessResponseMessage(customerInfoSubmitResMap);
+		custTransationDataResMap = SocialSdkMsgUtil.createSuccessResponseMessage(customerInfoSubmitResMap);
 
-		String response = SocialSdkMsgUtil
-				.createJSONFromMap(custTransationDataResMap);
+		String response = SocialSdkMsgUtil.createJSONFromMap(custTransationDataResMap);
 
 		return response;
 
 	}
 
-	public String validateTransactionData(
-			HashMap<String, String> socialTransactionDataMap)
-	{
+	@Override
+	public boolean validateTransactionData(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService / validateTransactionData");
 
-		String bankResponse = transactionRestService
-				.validateTransactionData(socialTransactionDataMap);
-		
-		JSONObject bankResponseJson = null;
+		boolean status = false;
 
-		String status = "failure";
+		String bankResponse = transactionRestService.validateTransactionData(socialTransactionDataMap);
+
+		JSONObject bankResponseJson = null;
 
 		log.info("Bank Response : " + bankResponse);
 
-		try
+		try 
 		{
 			bankResponseJson = new JSONObject(bankResponse);
-			status = bankResponseJson.getString(ApplicationConstants.Keys.STATUS);
 			
-			if(status.equalsIgnoreCase(ApplicationConstants.Keys.SUCCESS))
+			if (bankResponseJson.getString(ApplicationConstants.Keys.STATUS).equals(ApplicationConstants.Keys.SUCCESS)) 
 			{
-				String fbStoryPostRes = fbStoryPostService.postTransactionStory();
 				
-				if(log.isInfoEnabled())
-				{
-					log.info("FbStoryPost Response is : " + fbStoryPostRes);
-				}
+				bankResponseJson = new JSONObject(bankResponse);
+
+				log.info("Bank response Json is : " + bankResponseJson);
+
+				status = true;
 			}
-			
+
 			return status;
 
-		} catch (JSONException e)
-		{
-			log.error("Exception in validateCustomerTransactionData() : "
-					+ e.getMessage());
+		} catch (JSONException e) {
+			log.error("Exception in validateCustomerTransactionData() : " + e.getMessage());
 			e.printStackTrace();
 		}
 

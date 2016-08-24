@@ -6,14 +6,14 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONObject;
+import org.json.me.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.integration.Message;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.cmss.sdk.social.api.service.IFacebookDataService;
+import com.cmss.sdk.facebook.api.service.IFacebookDataService;
 import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.bean.FriendListBean;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
@@ -35,6 +35,7 @@ public class SocialSdkWebLoginService implements ISocialSdkService
 	@Autowired
 	private IAccountDetailService accountDetailService;
 	
+	@Override
 	public Message<String> execute(Message<String> message)
 	{
 		log.info("Inside WebLoginService/execute()");

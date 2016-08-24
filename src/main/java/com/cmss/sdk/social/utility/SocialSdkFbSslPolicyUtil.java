@@ -14,12 +14,12 @@ public class SocialSdkFbSslPolicyUtil
 {
 	public static void trustPolicy()
 	{
-
 		try
 		{
 			HttpsURLConnection
 					.setDefaultHostnameVerifier(new HostnameVerifier()
 					{
+						@Override
 						public boolean verify(String hostname,
 								SSLSession session)
 						{

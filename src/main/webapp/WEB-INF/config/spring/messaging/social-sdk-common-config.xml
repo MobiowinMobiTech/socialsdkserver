@@ -18,27 +18,27 @@
       	http://www.springframework.org/schema/util 
       	http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
-	<!-- <bean id="messageReceiver"
-		class="com.cmss.sdk.social.core.messaging.SocialSdkMessageReceiver" />
+	<!-- <bean id="messageReceiver" class="com.cmss.sdk.social.core.messaging.SocialSdkMessageReceiver" 
+		/> <bean id="responseHandler" class="com.cmss.sdk.social.core.messaging.SocialSdkResponseHandler" 
+		/> -->
 
-	<bean id="responseHandler"
-		class="com.cmss.sdk.social.core.messaging.SocialSdkResponseHandler" /> -->
-		
-	<bean id="httpClient"
-		class="org.apache.http.impl.client.DefaultHttpClient" />
-		
-		
+	<bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient" />
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 		<property name="messageConverters">
 			<list>
 				<bean
-					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
 					<property name="supportedMediaTypes" value="application/json">
 					</property>
 				</bean>
 			</list>
 		</property>
+	</bean>
+
+	<bean id="oauthToken" class="com.cmss.sdk.social.helper.bean.OAuthTokenBean">
+		<property name="consumerKey" value="JphkuHhxE4mrvjwOwJfyRxodS" />
+		<property name="consumerSecret" value="f7O4tjT1PN5L073yaDkd3QQIk009q7n6gdrCA7OgpLwCUAwV93" />
 	</bean>
 
 </beans>

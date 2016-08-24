@@ -11,6 +11,7 @@ public class SocialSdkTransactionDao implements ISocialSdkTransactionDao
 {
 	private Log log = LogFactory.getLog(this.getClass());
 
+	@Override
 	public String getCustomerBankId(String authToken)
 	{
 		log.info("Inside SocialSdkTransactionDao/getCustomerBankId() ");

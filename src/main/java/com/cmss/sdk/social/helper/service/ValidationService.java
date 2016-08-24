@@ -21,21 +21,24 @@ public class ValidationService implements IValidationService
 	@Autowired
 	private ISocialSdkValidationDao validationDao;
 
+	@Override
 	public boolean validateBankSocialChannelSubscription(HashMap<String, String> custoemrDataMap)
 	{
-		log.info("Inside ValidationService/validateBankSocialChannelSubscription()");
+		log.info("Inside ValidationService / validateBankSocialChannelSubscription()");
 		
 		/*
-		 * Check wether bank is subscribed for certain social banking channel
+		 * Check whether bank is subscribed for certain social banking channel
 		 * like facebook/twitter/instagram
-		 * */
+		 *
+		*/
 		
 		return true;
 	}
 
+	@Override
 	public boolean validateCustomer(HashMap<String, String> custoemrDataMap)
 	{
-		log.info("Inside ValidationService/validateCustomer()");
+		log.info("Inside ValidationService / validateCustomer()");
 		
 		CustomerBean customerBean = new CustomerBean();
 		
@@ -45,11 +48,11 @@ public class ValidationService implements IValidationService
 		return validationDao.validateCustomer(customerBean);
 		
 	}
-
+	
+	@Override
 	public String fetchCustomerToken()
 	{
-		log.info("Inside ValidationService/fetchCustomerToken");
-		
+		log.info("Inside ValidationService / fetchCustomerToken");
 		
 		return null;
 	}

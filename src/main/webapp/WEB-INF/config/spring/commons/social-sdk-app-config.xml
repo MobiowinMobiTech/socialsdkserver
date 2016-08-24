@@ -38,9 +38,9 @@
 						<entry key="invalidTransactionMessage" value="Cannot process transaciton rite now...Try aftre some time" />
 						<entry key="invalidUserMessage" value="Kindly Register With Social Banking" />
 						<entry key="invalidBankMessage" value="Bank doesn't subscribe social channel" />
+						<entry key="successfulTransactionMessage" value="Transaction Completed Successfully" />
 					</map>
 				</entry>
-				
 				<entry key="fbapiparams">
 					<map>
 						<entry key="userpermission" value="taggable_friends" />
@@ -51,9 +51,14 @@
 						<entry key="pretty" value="0" />
 						<entry key="suppress_http_code" value="1" />
 						<entry key="fbbaseurl" value="https://graph.facebook.com/v2.5/" />
+						<entry key="client_id" value="1833704593516572" />
+						<entry key="fbappsecret" value="a92ab354d1ea3f147527a74be5a12897" />
+						<entry key="redirect_uri" value="http://192.168.1.138:8080/SocialSdkWeb/jsp/SocialFacebook.jsp" />
+						<entry key="fbapiversion" value="v2.5" />
+						<entry key="scope" value="email,user_friends,publish_actions" />
+						<entry key="baseurl" value="https://www.facebook.com/" />
 					</map>
 				</entry>
-				
 				<entry key="fbstoryparams">
 					<map>
 						<entry key="fbgraphurl" value="https://graph.facebook.com/v2.5/" />
@@ -67,6 +72,14 @@
 					<map>
 						<entry key="userid" value="o_3f3erbjo09" />
 						<entry key="apikey" value="R_bdb76a8f8b10422688610b1aa3bc294b" />
+					</map>
+				</entry>
+				<entry key="twitterparams">
+					<map>
+						<entry key="consumerKey" value="JphkuHhxE4mrvjwOwJfyRxodS" />
+						<entry key="consumerSecret" value="f7O4tjT1PN5L073yaDkd3QQIk009q7n6gdrCA7OgpLwCUAwV93" />
+						<entry key="appId" value="733279989483720704" />
+						<entry key="callbackUrl" value="http://192.168.0.36:8080/SocialSdkWeb/jsp/SocialTwitter.jsp" />
 					</map>
 				</entry>
 			</map>

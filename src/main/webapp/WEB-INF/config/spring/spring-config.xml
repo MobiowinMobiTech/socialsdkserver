@@ -13,6 +13,5 @@
 	
 	<import resource="messaging/spring-config.xml" />
 	<import resource="commons/spring-config.xml"/>
-	<import resource="mailmoney/mail-money-config.xml"/>
-
+	<import resource="mailmoney/mail.xml"/>
 </beans>

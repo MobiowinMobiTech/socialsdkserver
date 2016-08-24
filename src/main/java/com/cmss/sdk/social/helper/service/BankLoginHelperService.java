@@ -26,6 +26,7 @@ public class BankLoginHelperService implements IBankLoginHelperService
 	private IBankCustomerInfoSubmitDao customerInfoSubmitDao;
 	
 	
+	@Override
 	public HashMap<String, String> generateCustomerTokenMap()
 	{
 		log.info("Inside BankLoginHelperService / generateCustomerTokenMap");
@@ -41,7 +42,6 @@ public class BankLoginHelperService implements IBankLoginHelperService
 			log.info("Cutomer request token : " + reqToken);
 			log.info("Cutomer auth    token : " + authToken);
 			log.info("Cutomer auth expiry   : " + authExpiryDate);
-			
 		}
 		
 		customerTokenMap = new HashMap<String, String>();
@@ -49,20 +49,20 @@ public class BankLoginHelperService implements IBankLoginHelperService
 		customerTokenMap.put(ApplicationConstants.Keys.CUST_REQ_TOKEN, reqToken);
 		customerTokenMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN, authToken);
 		customerTokenMap.put(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT, authExpiryDate);
-		
+	
 		return customerTokenMap;
 	}
 
-	public String submitBankCustomerInfo(
-			HashMap<String, String> bankLoginReqDataMap,
-			HashMap<String, String> customerTokenMap)
+	@Override
+	public String submitBankCustomerInfo(HashMap<String, String> bankLoginReqDataMap, HashMap<String, String> customerTokenMap)
 	{
-		log.info("Inside BankLoginHelperService/submitBankCustomerInfo()");
+		log.info("Inside BankLoginHelperService / submitBankCustomerInfo()");
 		
 		final List<HashMap<String, Object>> custResMapList = new ArrayList<HashMap<String, Object>>();
+		
 		HashMap<String, Object> custDataResMap = null;
 
-		HashMap<String, Object> customerInfoSubmitResMap = customerInfoSubmitDao.submitCustomerData(bankLoginReqDataMap,customerTokenMap);
+		HashMap<String, Object> customerInfoSubmitResMap = customerInfoSubmitDao.submitCustomerData(bankLoginReqDataMap, customerTokenMap);
 
 		custResMapList.add(customerInfoSubmitResMap);
 
