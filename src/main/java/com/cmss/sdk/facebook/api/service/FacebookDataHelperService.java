@@ -25,8 +25,7 @@ public class FacebookDataHelperService implements IFacebookDataHelperService
 	
 	@Autowired
 	private ApplicationConfiguration<String, HashMap<String, String>> applicationConfig;
-
-	@Override
+	
 	public boolean isCustomerExists(HashMap<String, String> customerDataMap)
 	{
 		log.info("insdie FacebookDataHelperService/isCustomerExists()");
@@ -34,7 +33,6 @@ public class FacebookDataHelperService implements IFacebookDataHelperService
 		return false;
 	}
 
-	@Override
 	public HashMap<String, String> fetchFacebookAppAuthDetail() 
 	{
 		log.info("Inside FacebookDataHelperService/fetchFacebookAppAuthDetail()");
@@ -80,7 +78,6 @@ public class FacebookDataHelperService implements IFacebookDataHelperService
 		return facebookAppAuthUrlBuilder.toString();
 	}
 
-	@Override
 	public HashMap<String, String> generateAuthDataMap()
 	{
 		log.info("Inside FacebookDataHelperService/generateAuthDataMap()");
@@ -100,7 +97,6 @@ public class FacebookDataHelperService implements IFacebookDataHelperService
 		return customerTokenMap;
 	}
 
-	@Override
 	public String generateFacebookAppAuthRes(HashMap<String, String> facebookAppAuthDetailMap,
 			HashMap<String, String> customerAuthDataMap) {
 		
@@ -115,7 +111,6 @@ public class FacebookDataHelperService implements IFacebookDataHelperService
 		
 	}
 
-	@Override
 	public HashMap<String, String> fetchCustomerAccessToken(HashMap<String, String> socialUserDataMap) 
 	{
 		log.info("Inside FacebookDataHelperService/fetchCustomerAccessToken()");

@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.me.JSONObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,6 @@ public class SocialSdkWebLoginService implements ISocialSdkService
 	@Autowired
 	private IAccountDetailService accountDetailService;
 	
-	@Override
 	public Message<String> execute(Message<String> message)
 	{
 		log.info("Inside WebLoginService/execute()");

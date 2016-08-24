@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 
 
-@Service("twitterAppValidateService")
+//@Service("twitterAppValidateService")
 @Component
 public class SocialSdkWebAppValidateService implements ISocialSdkService
 {

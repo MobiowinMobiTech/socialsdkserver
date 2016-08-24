@@ -19,7 +19,6 @@ public class SocialSdkFbSslPolicyUtil
 			HttpsURLConnection
 					.setDefaultHostnameVerifier(new HostnameVerifier()
 					{
-						@Override
 						public boolean verify(String hostname,
 								SSLSession session)
 						{

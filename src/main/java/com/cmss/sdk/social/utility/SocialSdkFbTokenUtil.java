@@ -10,8 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 
 import com.cmss.sdk.social.commons.ApplicationConstants;
 
@@ -79,7 +78,7 @@ public class SocialSdkFbTokenUtil
 				    	if (respEntity != null)
 						{
 							content =  EntityUtils.toString(respEntity);
-							JSONObject jsonMessage = (JSONObject)new JSONParser().parse(content);
+							JSONObject jsonMessage = new JSONObject(content);
 							facebookid = (String) jsonMessage.get("id");
 							name = (String) jsonMessage.get("name");
 							

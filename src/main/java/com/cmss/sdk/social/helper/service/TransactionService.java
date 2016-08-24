@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.me.JSONException;
-import org.json.me.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,6 @@ public class TransactionService implements ITransactionService {
 	@Autowired
 	private SocialSdkFbPostService fbStoryPostService;
 
-	@Override
 	public String getBankCustomerId(String authToken) {
 		log.info("Inside TransactionService / getBankCustomerId()");
 
@@ -40,7 +39,6 @@ public class TransactionService implements ITransactionService {
 		return customerBankId;
 	}
 
-	@Override
 	public String validateCustomerTransactionData(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService/validateCustomerTransactionData()");
 
@@ -70,7 +68,6 @@ public class TransactionService implements ITransactionService {
 
 	}
 
-	@Override
 	public boolean generateTransactionOtp(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService / generateTransactionOtp()");
 
@@ -78,7 +75,6 @@ public class TransactionService implements ITransactionService {
 
 	}
 
-	@Override
 	public String genearteTransactionReponse() {
 		
 		final List<HashMap<String, Object>> transactionResMapList = new ArrayList<HashMap<String, Object>>();
@@ -96,7 +92,6 @@ public class TransactionService implements ITransactionService {
 
 	}
 
-	@Override
 	public boolean validateTransactionData(HashMap<String, String> socialTransactionDataMap) {
 		log.info("Inside TransactionService / validateTransactionData");
 

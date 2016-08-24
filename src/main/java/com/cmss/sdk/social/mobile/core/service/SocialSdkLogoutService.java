@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.ILogoutService;
-@Service ("socialLogoutService")
+//@Service ("socialLogoutService")
 @Component
 public class SocialSdkLogoutService implements ISocialSdkService
 {

@@ -13,7 +13,7 @@ import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
 import twitter4j.auth.RequestToken;
 
-@Service("twitterValidateService")
+//@Service("twitterValidateService")
 @Component
 public class TwitterValidateService implements ITwitterAppValidateService
 {
@@ -22,7 +22,6 @@ public class TwitterValidateService implements ITwitterAppValidateService
 	@Autowired
 	private TwitterDataService socialSdkTwitterUtilService;
 
-	@Override
 	public HashMap<String, Object> getTwitterSignInDeatils() 
 	{
 		log.info("Inside TwitterAppValidateService / getTwitterSignInDeatils()");
@@ -52,7 +51,6 @@ public class TwitterValidateService implements ITwitterAppValidateService
 		return null;
 	}
 
-	@Override
 	public String generateTwitterSigninRes(HashMap<String, Object> twitterDetailsMap) {
 		
 		log.info("Inside TwitterAppValidateService / generateTwitterSigninRes()");

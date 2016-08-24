@@ -23,7 +23,6 @@ public class MailMoneyHelperService implements IMailMoneyHelperService {
 	@Autowired
 	private IBankLoginHelperService bankLoginHelperService;
 
-	@Override
 	public HashMap<String, Object> getCustomerAccountDeatils(String bankCustId) {
 
 		log.info("Inside MailMoneyHelperService/getCustomerAccountDeatils()");
@@ -33,7 +32,6 @@ public class MailMoneyHelperService implements IMailMoneyHelperService {
 		return custBankDetailMap;
 	}
 
-	@Override
 	public HashMap<String, String> generateCustomerAuthData() {
 
 		log.info("Inside MailMoneyHelperService/generateCustomerAuthData()");
@@ -43,7 +41,6 @@ public class MailMoneyHelperService implements IMailMoneyHelperService {
 		return customerAuthTokenDataMap;
 	}
 
-	@Override
 	public String generateMailMoneyAccountRes(HashMap<String, Object> custBankDetailMap, HashMap<String, String> custAuthDataMap) {
 
 		log.info("Inside MailMoneyHelperService/generateMailMoneyAccountRes()");

@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.codehaus.jackson.JsonFactory;
-import org.json.me.JSONArray;
-import org.json.me.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import twitter4j.IDs;
 import twitter4j.PagableResponseList;

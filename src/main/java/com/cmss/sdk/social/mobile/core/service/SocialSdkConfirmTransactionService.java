@@ -20,7 +20,7 @@ import com.cmss.sdk.social.helper.service.ITransactionService;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
 
-@Service ("confirmTransactionService")
+//@Service ("confirmTransactionService")
 @Component
 public class SocialSdkConfirmTransactionService implements ISocialSdkService
 {
@@ -81,9 +81,9 @@ public class SocialSdkConfirmTransactionService implements ISocialSdkService
 			
 			socialTransactionDataMap = getSocialTarnsactionDataMap(otp,transactionPwd,socialTransactionId,bankTransactionId,otpAttempt);
 			
-			String bankResponse = transactionService.validateTransactionData(socialTransactionDataMap); 
+			boolean bankResponse = transactionService.validateTransactionData(socialTransactionDataMap); 
 			
-			if(bankResponse.equals(ApplicationConstants.Keys.SUCCESS))
+			if(bankResponse)
 			{
 				
 				response = transactionService.genearteTransactionReponse();

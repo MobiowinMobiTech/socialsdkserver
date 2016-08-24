@@ -23,7 +23,7 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
-@Service("twiiterDataService")
+//@Service("twiiterDataService")
 @Component
 public class TwitterDataService implements ITwitterDataService {
 
@@ -133,7 +133,6 @@ public class TwitterDataService implements ITwitterDataService {
 		return twitterRequestTokenMap;
 	}
 
-	@Override
 	public HashMap<String, Object> getTwitterFriendDataMap(HashMap<String, String> twitterParamMap)
 	{
 		

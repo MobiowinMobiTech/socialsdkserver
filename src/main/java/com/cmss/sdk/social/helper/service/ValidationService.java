@@ -21,7 +21,6 @@ public class ValidationService implements IValidationService
 	@Autowired
 	private ISocialSdkValidationDao validationDao;
 
-	@Override
 	public boolean validateBankSocialChannelSubscription(HashMap<String, String> custoemrDataMap)
 	{
 		log.info("Inside ValidationService / validateBankSocialChannelSubscription()");
@@ -35,7 +34,6 @@ public class ValidationService implements IValidationService
 		return true;
 	}
 
-	@Override
 	public boolean validateCustomer(HashMap<String, String> custoemrDataMap)
 	{
 		log.info("Inside ValidationService / validateCustomer()");
@@ -49,7 +47,6 @@ public class ValidationService implements IValidationService
 		
 	}
 	
-	@Override
 	public String fetchCustomerToken()
 	{
 		log.info("Inside ValidationService / fetchCustomerToken");

@@ -24,7 +24,6 @@ public class WebLoginService implements IWebLoginService
 	@Autowired
 	private ISocialSdkWebCustDao socialSdkWebCustDao;
 
-	@Override
 	public HashMap<String, String> fetchCustomerToken(
 			HashMap<String, String> custoemrDataMap)
 	{
@@ -59,7 +58,6 @@ public class WebLoginService implements IWebLoginService
 		
 	}
 
-	@Override
 	public String generateResponse(HashMap<String, String> custAuthDetailsMap,
 			List<FriendListBean> friendList,
 			HashMap<String, Object> custAccountDetailsMap)

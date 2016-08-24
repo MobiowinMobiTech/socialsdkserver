@@ -32,7 +32,6 @@ public class FriendListBean
 		this.imageURL = imageURL;
 	}
 	
-	@Override
 	public String toString()
 	{
 		return "FriendListBean [friendId=" + friendId + ", friendName="

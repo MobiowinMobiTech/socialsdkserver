@@ -28,15 +28,15 @@
 	<!-- ############## Header Module Routing Processing ################## -->
 	<int:header-value-router input-channel="requestRouterChannel"
 		header-name="module" id="ModuleRouterId">
-		<int:mapping value="mobile" channel="mobileReqChannel" />
+		<int:mapping value="mobile" channel="mobileSocialChannel" />
 		<int:mapping value="web" channel="webReqChannel" />
 	</int:header-value-router>
 
 	<!-- ################# Channel Routing Processing ##################### -->
-	<int:header-value-router input-channel="mobileReqChannel"
+	<!-- <int:header-value-router input-channel="mobileReqChannel"
 		header-name="channel" id="reqChannelRouterId">
 		<int:mapping value="mobilesocialbanking" channel="mobileSocialChannel" />
-	</int:header-value-router>
+	</int:header-value-router> -->
 
 	<!-- ################### Mobile Module ################################ -->
 	<!-- ################### Entity Routing ############################### -->

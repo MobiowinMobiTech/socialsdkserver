@@ -19,7 +19,7 @@ import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.ITransactionService;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
-@Service("submitTransactionService")
+//@Service("submitTransactionService")
 @Component
 public class SocialSdkSubmitTransactionService implements ISocialSdkService
 {

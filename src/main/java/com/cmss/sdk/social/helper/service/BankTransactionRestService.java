@@ -32,7 +32,6 @@ public class BankTransactionRestService implements ITransactionRestService
 	@Autowired
 	private DefaultHttpClient httpClient;
 
-	@Override
 	public String validateCustmerTransactionData(
 			HashMap<String, String> socialTransactionDataMap)
 	{
@@ -104,7 +103,6 @@ public class BankTransactionRestService implements ITransactionRestService
 		return null;
 	}
 
-	@Override
 	public String validateTransactionData(
 			HashMap<String, String> socialTransactionDataMap)
 	{

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.integration.MessageChannel;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -35,7 +35,6 @@ public class SocialSdkGateway extends HttpServlet
 		super();
 	}
 
-	@Override
 	protected void doGet(HttpServletRequest requset,
 			HttpServletResponse response) throws ServletException, IOException
 	{
@@ -61,7 +60,6 @@ public class SocialSdkGateway extends HttpServlet
 		response.getOutputStream().write(systemInfo.toString().getBytes());
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException
 	{

@@ -17,7 +17,7 @@ import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.ISocialSdkTokenValidationService;
 
-@Service ("socialAuthService")
+//@Service ("socialAuthService")
 @Component
 public class SocialSdkAuthService implements ISocialSdkService
 {

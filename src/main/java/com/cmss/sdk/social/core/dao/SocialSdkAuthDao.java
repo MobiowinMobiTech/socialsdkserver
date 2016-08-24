@@ -14,7 +14,6 @@ public class SocialSdkAuthDao implements ISocialSdkAuthDao
 
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	@Override
 	public String fetchCustAuthToken(HashMap<String, String> socialTokenDataMap)
 	{
 		log.info("Inside SocialSdkAuthDao/fetchCustAuthToken()");
@@ -26,7 +25,6 @@ public class SocialSdkAuthDao implements ISocialSdkAuthDao
 		return "123123";
 	}
 
-	@Override
 	public String fetchCustReqToken(HashMap<String, String> socialTokenDataMap)
 	{
 		log.info("Inside SocialSdkAuthDao/fetchCustReqToken()");

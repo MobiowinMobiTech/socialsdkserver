@@ -16,7 +16,6 @@ public class BankCustomerInfoSubmitDao implements IBankCustomerInfoSubmitDao
 
 	private Log log = LogFactory.getLog(this.getClass());
 
-	@Override
 	public HashMap<String, Object> submitCustomerData(HashMap<String, String> bankLoginReqDataMap,	HashMap<String, String> customerTokenMap)
 	{
 		

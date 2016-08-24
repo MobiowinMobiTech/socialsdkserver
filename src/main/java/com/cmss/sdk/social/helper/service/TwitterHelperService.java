@@ -24,7 +24,6 @@ public class TwitterHelperService implements ITwitterHelperService{
 	private IBankLoginHelperService bankLoginHelperService;
 	
 	
-	@Override
 	public HashMap<String, Object> getCustomerAccountDeatils(String bankCustId) {
 	
 		log.info("Inside TwitterHelperService/getCustomerAccountDeatils()");
@@ -34,7 +33,6 @@ public class TwitterHelperService implements ITwitterHelperService{
 		return custBankDetailMap;
 	}
 
-	@Override
 	public HashMap<String, String> generateCustomerAuthData() {
 		
 		log.info("Inside TwitterHelperService/generateCustomerAuthData()");
@@ -44,7 +42,6 @@ public class TwitterHelperService implements ITwitterHelperService{
 		return customerAuthTokenDataMap;
 	}
 
-	@Override
 	public String generateTwitterAccountRes(HashMap<String, String> custAuthDataMap, HashMap<String, Object> twitterSignInDetailsMap){
 
 		

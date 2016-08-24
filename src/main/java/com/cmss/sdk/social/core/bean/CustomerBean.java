@@ -130,7 +130,6 @@ public class CustomerBean implements Serializable
 		this.modTime = modTime;
 	}
 	
-	@Override
 	public String toString()
 	{
 		return "CustomerBean [custUnqId=" + custUnqId + ", clientId="

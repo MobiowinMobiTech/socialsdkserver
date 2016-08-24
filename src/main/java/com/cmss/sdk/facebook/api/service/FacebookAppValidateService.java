@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.me.JSONException;
-import org.json.me.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,6 @@ public class FacebookAppValidateService implements ISocialSdkService
 	@Autowired
 	private IFacebookDataHelperService facebookDataHelperService;
 
-	@Override
 	public Message<String> execute(Message<String> message) 
 	{
 		log.info("Inside FacebookAppValidateService/execute()");

@@ -13,7 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.json.me.JSONObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,6 @@ public class AccountDetailService implements IAccountDetailService
 	@Autowired
 	private DefaultHttpClient httpClient;
 
-	@Override
 	public HashMap<String, Object> getCustomerAccountDeatils(String socialCustId)
 	{
 		log.info("Inside AccountDetailService/getCustomerAccountDeatils()");
@@ -169,7 +168,6 @@ public class AccountDetailService implements IAccountDetailService
 		return null;
 	}
 
-	@Override
 	public String generateResponse(HashMap<String, Object> custBankDetails)
 	{
 		log.info("Inside AccountDetailService / generateResponse()");

@@ -30,7 +30,7 @@ public class AccountDeatils
 	{
 		this.accountBalance = accountBalance;
 	}
-	@Override
+	
 	public String toString()
 	{
 		return "AccountDeatils [accountNo=" + accountNo + ", accountType="

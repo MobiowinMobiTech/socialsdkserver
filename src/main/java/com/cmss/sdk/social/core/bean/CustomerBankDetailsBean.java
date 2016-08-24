@@ -50,7 +50,6 @@ public class CustomerBankDetailsBean
 		this.accountDetails = accountDetails;
 	}
 
-	@Override
 	public String toString()
 	{
 		return "CustomerBankDetailsBean [custName=" + custName + ", custId="

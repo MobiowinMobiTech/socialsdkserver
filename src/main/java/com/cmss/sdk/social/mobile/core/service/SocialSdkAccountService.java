@@ -17,7 +17,7 @@ import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.IAccountDetailService;
 
-@Service("socialSdkAccountInfoService")
+//@Service("socialSdkAccountInfoService")
 @Component
 public class SocialSdkAccountService implements ISocialSdkService
 {

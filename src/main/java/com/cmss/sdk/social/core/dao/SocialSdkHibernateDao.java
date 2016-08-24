@@ -28,7 +28,6 @@ public class SocialSdkHibernateDao implements ISocialSdkHibernateDao
     }
 
     
-	@Override
 	@Transactional
 	public boolean deleteCustSocialdData(
 			HashMap<String, String> socialUserDataMap)
@@ -49,7 +48,6 @@ public class SocialSdkHibernateDao implements ISocialSdkHibernateDao
 		return false;
 	}
 
-	@Override
 	public CustomerBean fetchCustomerBankDetails(String socialCustId)
 	{
 		log.info("Inside SocialSdkHibernateDao/fetchCustomerBankDetails()");

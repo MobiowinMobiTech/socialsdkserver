@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.me.JSONObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.ITwitterHelperService;
 
-@Service("twitterAppValidateService")
-@Component
+//@Service("twitterAppValidateService")
+@Component 
 public class TwitterAppValidateService implements ISocialSdkService {
 	private Log log = LogFactory.getLog(this.getClass());
 
@@ -26,7 +26,6 @@ public class TwitterAppValidateService implements ISocialSdkService {
 	@Autowired
 	private ITwitterHelperService twitterHelperService;
 
-	@Override
 	public Message<String> execute(Message<String> message) {
 		log.info("Inside TwitterAppValidateService/execute()");
 

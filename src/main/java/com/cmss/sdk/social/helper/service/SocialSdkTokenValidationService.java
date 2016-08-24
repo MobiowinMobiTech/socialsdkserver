@@ -21,7 +21,6 @@ public class SocialSdkTokenValidationService implements ISocialSdkTokenValidatio
 	@Autowired
 	private ISocialSdkAuthDao socialSdkAuthDao;
 
-	@Override
 	public boolean validateCustAuthToken(HashMap<String, String> socialTokenDataMap)
 	{
 		log.info("Inside SocialSdkValidationService/validateCustAuthToken");
@@ -36,7 +35,6 @@ public class SocialSdkTokenValidationService implements ISocialSdkTokenValidatio
 		return false;
 	}
 
-	@Override
 	public boolean validateCustReqToken(HashMap<String, String> socialTokenDataMap)
 	{
 		log.info("Inside SocialSdkValidationService/validateCustReqToken");

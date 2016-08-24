@@ -41,7 +41,6 @@ public class MailMoneyNotificationService implements IMailMoneyNotificationServi
 		this.templateMailMessage = templateMailMessage;
 	}
 
-	@Override
 	public String sendMailMoneyNotification() 
 	{
 		log.info("Inside MailMoneyNotificationService/sendMailMoneyNotification()");

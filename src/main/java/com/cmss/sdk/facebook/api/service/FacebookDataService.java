@@ -14,7 +14,7 @@ import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.bean.FriendListBean;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
-@Service ("socialSdkFbDataService")
+//@Service ("socialSdkFbDataService")
 @Component
 public class FacebookDataService implements IFacebookDataService
 {
@@ -27,7 +27,6 @@ public class FacebookDataService implements IFacebookDataService
 	@Autowired
 	private FacebookDataRestService dataHelperService;
 	
-	@Override
 	public List<FriendListBean> getUserFbFriendList(HashMap<String, String> socialUserDataMap)
 	{
 		log.info("Inside SocialSdkFbDataService / getUserFbFriendList()");

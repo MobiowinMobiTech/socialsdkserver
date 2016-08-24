@@ -17,7 +17,6 @@ import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 public class RegisterService implements IRegisterService {
 	private Log log = LogFactory.getLog(this.getClass());
 
-	@Override
 	public String generateTwitterResponse(HashMap<String, String> customerTokenMap, HashMap<String, Object> twitterFriendDataMap,
 			HashMap<String, Object> custBankDetailMap) 
 	{
@@ -37,7 +36,6 @@ public class RegisterService implements IRegisterService {
 		return SocialSdkMsgUtil.createJSONFromMap(custDataResMap);
 	}
 
-	@Override
 	public String generateFacebookResponse(HashMap<String, String> socialUserDataMap,
 			HashMap<String, String> customerTokenMap, List<FriendListBean> friendList,
 			HashMap<String, Object> custBankDetailMap) {
@@ -57,7 +55,6 @@ public class RegisterService implements IRegisterService {
 		return SocialSdkMsgUtil.createJSONFromMap(custDataResMap);
 	}
 
-	@Override
 	public String generateMobileFacebookResponse(HashMap<String, String> socialUserDataMap,
 			HashMap<String, String> customerTokenMap, List<FriendListBean> friendList) {
 		log.info("Inside RegisterService / generateMobileFacebookResponse()");
