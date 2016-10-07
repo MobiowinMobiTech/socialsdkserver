@@ -4,6 +4,8 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -16,9 +18,13 @@ import com.cmss.sdk.social.commons.ApplicationConstants;
 
 public class SocialSdkFbTokenUtil 
 {
+	
+	private static Log log = LogFactory.getLog("SocialSdkFbTokenUtil");
+	
 	public static final String APPID = "1833704593516572";
 	public static final String APPSECRET = "a92ab354d1ea3f147527a74be5a12897";
-	public static final String CALL_BACK_URI="http://192.168.1.138:8080/SocialSdkWeb/jsp/SocialFacebook.jsp";
+	public static final String WEB_CALL_BACK_URI="http://192.168.0.80:9081/SocialSdkWeb/jsp/SocialFacebook.jsp";
+	public static final String MOBILE_CALL_BACK_URI="http://192.168.0.80:9081/SocialSdkWeb/jsp/DeviceSocialFacebook.jsp";
 	
 	public static HashMap<String, String> generateFacebookData(HashMap<String, String> socialUserDataMap) 
 	{
@@ -33,18 +39,26 @@ public class SocialSdkFbTokenUtil
 		{
 			//String fetchAccessTokenUrl = generateAccessTokenUrl(socialUserDataMap); 
 			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse httpResponse  = httpClient.execute
-					(new HttpGet("https://graph.facebook.com/oauth/access_token?client_id="+APPID+"&redirect_uri=" + URLEncoder.encode(CALL_BACK_URI, "UTF-8") + "&client_secret="+APPSECRET+"&code=" + socialUserDataMap.get(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE)));
 			
+			HttpResponse httpResponse;
+			
+			if(socialUserDataMap.get(ApplicationConstants.Keys.REQUEST_MODULE).equalsIgnoreCase(ApplicationConstants.Keys.MODULE_WEB)){
+				httpResponse  = httpClient.execute
+						(new HttpGet("https://graph.facebook.com/oauth/access_token?client_id="+APPID+"&redirect_uri=" + URLEncoder.encode(WEB_CALL_BACK_URI, "UTF-8") + "&client_secret="+APPSECRET+"&code=" + socialUserDataMap.get(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE)));
+			}else{
+				httpResponse  = httpClient.execute
+						(new HttpGet("https://graph.facebook.com/oauth/access_token?client_id="+APPID+"&redirect_uri=" + URLEncoder.encode(MOBILE_CALL_BACK_URI, "UTF-8") + "&client_secret="+APPSECRET+"&code=" + socialUserDataMap.get(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE)));
+			}
+						
 			if (httpResponse != null) 
 			{
 		        // EntityUtils to get the response content
 		        String content =  EntityUtils.toString(httpResponse.getEntity());
 		        String contentType = httpResponse.getFirstHeader("Content-Type").getValue();
 		        contentType = contentType.substring(0, contentType.indexOf(";"));
-		        System.out.println("------------------------------------------");
-		        System.out.println("short contentType::"+contentType);
-		        System.out.println("short content::"+content);
+		        log.info("------------------------------------------");
+		        log.info("short contentType::"+contentType);
+		        log.info("short content::"+content);
 		        if("text/plain".equals(contentType))
 		        {
 		        	paramMap = getParamMap(content);
@@ -52,14 +66,14 @@ public class SocialSdkFbTokenUtil
 		        
 		        
 		        String short_access_token = paramMap.get("access_token");
-				System.out.println("short_access_token::"+short_access_token);
+		        log.info("short_access_token::"+short_access_token);
 				
 				httpResponse = httpClient.execute(new HttpGet("https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id="+APPID+"&client_secret="+APPSECRET+"&fb_exchange_token="+short_access_token));
 				content =  EntityUtils.toString(httpResponse.getEntity());
 				contentType = httpResponse.getFirstHeader("Content-Type").getValue();
 				contentType = contentType.substring(0, contentType.indexOf(";"));
-				System.out.println("long contentType::"+contentType);
-				System.out.println("long content::"+content);
+				log.info("long contentType::"+contentType);
+				log.info("long content::"+content);
 				
 				if("text/plain".equals(contentType))
 				{

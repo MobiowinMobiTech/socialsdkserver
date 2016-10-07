@@ -75,7 +75,7 @@ public class SocialSdkGateway extends HttpServlet
 
 			SocialSdkMsgProcessUtil.readQueryString(request);
 
-				if (null != data)
+			if (data != null)
 				{
 					if (log.isInfoEnabled())
 					{

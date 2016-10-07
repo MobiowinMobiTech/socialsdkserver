@@ -97,7 +97,7 @@ public class SolicalSdkWebValidateService implements ISocialSdkService
 			else
 			{
 				response = SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-						ApplicationConstants.Keys.INVALID_BANK_MSG));
+						ApplicationConstants.Keys.INVALID_BANK_MSG),"0");
 				
 				return MessageBuilder.withPayload(response).build();
 			}

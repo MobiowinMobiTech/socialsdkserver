@@ -23,7 +23,7 @@ import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
 @Service("mailMoneyAccountService")
 @Component
-public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
+public class SocialSdkMailMoneyAccountService implements ISocialSdkService {
 
 	private Log log = LogFactory.getLog(this.getClass());
 
@@ -56,6 +56,9 @@ public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
 		try 
 		{
 			validateCustomerDataJson = new JSONObject(jsonData);
+//			if(validateCustomerDataJson.getJSONObject(ApplicationConstants.Keys.DATA) == null){
+//				
+//			}
 			customerDataJson = validateCustomerDataJson.getJSONObject(ApplicationConstants.Keys.DATA);
 
 			bankCustId = customerDataJson.getString(ApplicationConstants.Keys.CUST_BANK_ID);
@@ -109,7 +112,7 @@ public class SocailSdkMailMoneyAccountService implements ISocialSdkService {
 			else
 			{
 				response = SocialSdkMsgUtil.createErrorMessage(applicationConfig
-						.getValue(ApplicationConstants.Keys.MESSAGE).get(ApplicationConstants.Keys.INVALID_BANK_MSG));
+						.getValue(ApplicationConstants.Keys.MESSAGE).get(ApplicationConstants.Keys.INVALID_BANK_MSG),"0");
 
 				return MessageBuilder.withPayload(response).build();
 			}

@@ -20,7 +20,7 @@
 
 	<int:channel id="socialSdkInputChannel" />
 	<int:channel id="socialSdkOutputChannel" />
-	<int:channel id="requestRouterChannel" />
+	<int:channel id="requestRouterCxhannel" />
 
 	<int:service-activator input-channel="socialSdkInputChannel"
 		ref="messageReceiver" output-channel="requestRouterChannel" />
@@ -30,79 +30,81 @@
 		header-name="module" id="ModuleRouterId">
 		<int:mapping value="mobile" channel="mobileSocialChannel" />
 		<int:mapping value="web" channel="webReqChannel" />
+		<int:mapping value="undefined" channel="socialSdkOutputChannel" />
 	</int:header-value-router>
 
 	<!-- ################# Channel Routing Processing ##################### -->
-	<!-- <int:header-value-router input-channel="mobileReqChannel"
-		header-name="channel" id="reqChannelRouterId">
-		<int:mapping value="mobilesocialbanking" channel="mobileSocialChannel" />
-	</int:header-value-router> -->
+	<!-- <int:header-value-router input-channel="mobileReqChannel" header-name="channel" 
+		id="reqChannelRouterId"> <int:mapping value="mobilesocialbanking" channel="mobileSocialChannel" 
+		/> </int:header-value-router> -->
 
 	<!-- ################### Mobile Module ################################ -->
 	<!-- ################### Entity Routing ############################### -->
 	<int:header-value-router input-channel="mobileSocialChannel"
-		header-name="entity" id="mobileEntityRouterId">
-		<int:mapping value="validate" channel="custValidateChannel" />
-		<int:mapping value="login" channel="custLoginChannel" />
-		<int:mapping value="banklogin" channel="bankLoginChannel" /><!-- not working -->
-		<int:mapping value="sociallogin" channel="bankLoginChannel" /><!-- not working -->
-		<int:mapping value="register" channel="webCustomerRegisterChannel" />
-		<int:mapping value="custsocialregister" channel="mobileSocialRegisterChannel" /><!-- not working -->
-		<int:mapping value="custbankregister" channel="mobileBankRegisterChannel" /><!-- not working -->
+		header-name="entity">
+		<int:mapping value="banklogin" channel="bankLoginChannel" />
+		<int:mapping value="sociallogin" channel="socialLoginChannel" />
+		<int:mapping value="friendlist" channel="webCustomerRegisterChannel" />
+		<int:mapping value="accountinfo" channel="accountInfoChannel" />
 		<int:mapping value="mailmoney" channel="mailAccountInfoChannel" />
 		<int:mapping value="submittransaction" channel="tokenAuthChannel" />
 		<int:mapping value="confirmtransaction" channel="tokenAuthChannel" />
+		<!-- <int:mapping value="validate" channel="custValidateChannel" /> <int:mapping 
+			value="login" channel="custLoginChannel" /> <int:mapping value="register" 
+			channel="webCustomerRegisterChannel" /> <int:mapping value="socialregister" 
+			channel="mobileSocialRegisterChannel" /> <int:mapping value="bankregister" 
+			channel="mobileBankRegisterChannel" /> -->
 	</int:header-value-router>
 
 	<!-- ################### Web Module ################################### -->
 	<!-- ################### Social Api Channel Routing ################### -->
 	<int:header-value-router input-channel="webReqChannel"
-		header-name="entity" id="webEntityRouterId">
+		header-name="entity">
 		<int:mapping value="validate" channel="custValidateChannel" />
 		<int:mapping value="login" channel="custLoginChannel" />
 		<int:mapping value="register" channel="webCustomerRegisterChannel" />
 		<int:mapping value="mailmoney" channel="mailAccountInfoChannel" />
 		<int:mapping value="submittransaction" channel="tokenAuthChannel" />
 		<int:mapping value="confirmtransaction" channel="tokenAuthChannel" />
-		<int:mapping value="banklogin" channel="bankLoginChannel" /><!-- mobile -->
-		<int:mapping value="custsocialregister" channel="mobileSocialRegisterChannel" /><!-- mobile -->
-		<int:mapping value="custbankregister" channel="mobileBankRegisterChannel" /><!-- mobile -->
+		<int:mapping value="accountinfo" channel="accountInfoChannel" />
 	</int:header-value-router>
 
 	<!-- ###################### Validate User Request ##################### -->
 	<int:service-activator ref="custValidateService"
 		method="execute" input-channel="custValidateChannel" output-channel="custValidateResChannel" />
-		
+
 	<int:header-value-router input-channel="custValidateResChannel"
 		header-name="isValid" id="custValidationReqId">
 		<int:mapping value="true" channel="custValidChannel" />
 		<int:mapping value="false" channel="custInvalidChannel" />
 	</int:header-value-router>
-	
+
 	<!-- Valid User -->
 	<int:header-value-router input-channel="custValidChannel"
-		header-name="channel">
-		<int:mapping value="facebook" channel="facebookAppValidateChannle" />
+		header-name="socialchanneltype">
+		<int:mapping value="facebook" channel="facebookAppValidateChannel" />
 		<int:mapping value="twitter" channel="twitterAppValidateChannel" />
 		<int:mapping value="mailmoney" channel="authrizedCustChannel" />
+		<int:mapping value="whatsapp" channel="authrizedCustChannel" />
+		<int:mapping value="sms" channel="authrizedCustChannel" />
 		<int:mapping value="instagram" channel="authrizedCustChannel" />
 	</int:header-value-router>
-	
+
 	<int:service-activator ref="facebookAppValidateService"
-		method="execute" input-channel="facebookAppValidateChannle"
+		method="execute" input-channel="facebookAppValidateChannel"
 		output-channel="socialSdkOutputChannel" />
-		
+
 	<int:service-activator ref="twitterAppValidateService"
 		method="execute" input-channel="twitterAppValidateChannel"
 		output-channel="socialSdkOutputChannel" />
-	
+
 	<int:service-activator ref="authoriseCustomerService"
 		method="execute" input-channel="authrizedCustChannel" output-channel="socialSdkOutputChannel" />
 
 	<!-- InValid User -->
 	<int:service-activator ref="unauthoriseCustomerService"
 		method="execute" input-channel="custInvalidChannel" output-channel="socialSdkOutputChannel" />
-		
+
 	<!-- ####################### Customer Login Request ################### -->
 	<int:service-activator ref="webCustLoginService"
 		method="execute" input-channel="custLoginChannel" output-channel="socialSdkOutputChannel" />
@@ -113,22 +115,26 @@
 		output-channel="customerSocialRegChannel" />
 
 	<int:header-value-router input-channel="customerSocialRegChannel"
-		header-name="channel">
-		<int:mapping value="facebook" channel="facebookRegChannel" />
+		header-name="modulechannel">
+		<int:mapping value="mobile_facebook" channel="mobilefacebookChannel" />
+		<int:mapping value="web_facebook" channel="facebookRegChannel" />
 		<int:mapping value="twitter" channel="twitterRegChannel" />
 	</int:header-value-router>
+
+	<int:service-activator ref="mobileFacebookCustRegisterService"
+		method="execute" input-channel="mobilefacebookChannel" output-channel="socialSdkOutputChannel" />
 
 	<int:service-activator ref="facebookCustRegisterService"
 		method="execute" input-channel="facebookRegChannel" output-channel="socialSdkOutputChannel" />
 
 	<int:service-activator ref="twitterCustRegisterService"
 		method="execute" input-channel="twitterRegChannel" output-channel="socialSdkOutputChannel" />
-	
+
 	<!-- ############## Mobile Customer Bank Register Request ############## -->
 	<int:service-activator ref="customerBankRegisterService"
 		method="execute" input-channel="mobileBankRegisterChannel"
 		output-channel="socialSdkOutputChannel" />
-		
+
 	<!-- ########### Mobile Customer Social Register Request ############### -->
 	<int:service-activator ref="customerSocialRegisterService"
 		method="execute" input-channel="mobileSocialRegisterChannel"
@@ -141,10 +147,12 @@
 	</int:header-value-router>
 
 	<int:service-activator ref="mobileFacebookCustRegisterService"
-		method="execute" input-channel="mobileFacebookRegChannel" output-channel="socialSdkOutputChannel" />
+		method="execute" input-channel="mobileFacebookRegChannel"
+		output-channel="socialSdkOutputChannel" />
 
 	<int:service-activator ref="mobileFacebookCustRegisterService"
-		method="execute" input-channel="mobileTwitterRegChannel" output-channel="socialSdkOutputChannel" />
+		method="execute" input-channel="mobileTwitterRegChannel"
+		output-channel="socialSdkOutputChannel" />
 
 	<!-- ################### Validate Mail Money Request ################## -->
 	<int:service-activator ref="mailMoneyAccountService"
@@ -154,6 +162,10 @@
 	<!-- ######################## Mobile Bank Login Request ############ -->
 	<int:service-activator ref="bankLoginService"
 		method="execute" input-channel="bankLoginChannel" output-channel="socialSdkOutputChannel" />
+
+	<!-- ######################## Mobile Social Login Request ############ -->
+	<int:service-activator ref="socialLoginService"
+		method="execute" input-channel="socialLoginChannel" output-channel="socialSdkOutputChannel" />
 
 	<!-- ####################### Social SDK Authentication ################ -->
 	<int:service-activator ref="socialAuthService"
@@ -171,15 +183,23 @@
 		header-name="reqheader" id="socialChannelHeaderId">
 		<int:mapping value="facebook_sociallogin" channel="facebookLoginChannel" />
 		<int:mapping value="twitter_sociallogin" channel="twitterLoginChannel" />
+
 		<int:mapping value="facebook_accountinfo" channel="accountInfoChannel" />
 		<int:mapping value="twitter_accountinfo" channel="accountInfoChannel" />
+
 		<int:mapping value="facebook_sociallogout" channel="socialLogoutChannel" />
+
 		<int:mapping value="facebook_submittransaction" channel="submitTransactionChannel" />
 		<int:mapping value="twitter_submittransaction" channel="submitTtransactionChannel" />
+		<int:mapping value="mail_submittransaction" channel="submitTransactionChannel" />
+		<int:mapping value="sms_submittransaction" channel="submitTransactionChannel" />
+		<int:mapping value="whatsapp_submittransaction" channel="submitTransactionChannel" />
+
 		<int:mapping value="facebook_confirmtransaction" channel="confirmTransactionChannel" />
 		<int:mapping value="twitter_confirmtransaction" channel="confirmTransactionChannel" />
 		<int:mapping value="mail_confirmtransaction" channel="confirmTransactionChannel" />
-		<int:mapping value="mail_submittransaction" channel="submitTransactionChannel" />
+		<int:mapping value="sms_confirmtransaction" channel="confirmTransactionChannel" />
+		<int:mapping value="whatsapp_confirmtransaction" channel="confirmTransactionChannel" />
 	</int:header-value-router>
 
 	<!-- ################## Facebook Authorize Access #################### -->
@@ -216,6 +236,8 @@
 		<int:mapping value="mail" channel="mailMoneyNotificationChannel" />
 		<int:mapping value="twitter" channel="twitterNotificationChannel" />
 		<int:mapping value="instagram" channel="instagramNotificationChannel" />
+		<int:mapping value="sms" channel="smsNotificationChannel" />
+		<int:mapping value="whatsapp" channel="whatsappNotificationChannel" />
 	</int:header-value-router>
 
 	<!-- Social Sdk Facebook Story Post Notification Service -->
@@ -239,6 +261,15 @@
 		method="execute" input-channel="instagramNotificationChannel"
 		output-channel="socialSdkOutputChannel" />
 
+	<!-- Social Sdk SMS Notification Service -->
+	<int:service-activator ref="smsNotificationService"
+		method="execute" input-channel="smsNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
+
+	<!-- Social Sdk WhatsApp SMS Notification Service -->
+	<int:service-activator ref="whatsappNotificationService"
+		method="execute" input-channel="whatsappNotificationChannel"
+		output-channel="socialSdkOutputChannel" />
 
 	<!-- ################## UnAuthorize Access #################### -->
 	<int:service-activator ref="unAuthorizeAccessService"

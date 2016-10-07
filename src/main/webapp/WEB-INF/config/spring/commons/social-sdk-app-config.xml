@@ -39,6 +39,11 @@
 						<entry key="invalidUserMessage" value="Kindly Register With Social Banking" />
 						<entry key="invalidBankMessage" value="Bank doesn't subscribe social channel" />
 						<entry key="successfulTransactionMessage" value="Transaction Completed Successfully" />
+						<entry key="invalidModule" value="Module is undefined or invalide. Module should be web or mobile" />
+						<entry key="invalidEntity" value="Entity is invalide. Can not proceed to complete service as entity is invalid" />
+						<entry key="invalidPayload" value="Payload is invalide. Payload is null or empty" />
+						<entry key="invalidData" value="Data is invalide. Data is null, empty or missing (any one or more) key" />
+						<entry key="invalidAuthData" value="AuthData is invalide. AuthData is null, empty or missing (any one or more) key" />
 					</map>
 				</entry>
 				<entry key="fbapiparams">
@@ -53,7 +58,7 @@
 						<entry key="fbbaseurl" value="https://graph.facebook.com/v2.5/" />
 						<entry key="client_id" value="1833704593516572" />
 						<entry key="fbappsecret" value="a92ab354d1ea3f147527a74be5a12897" />
-						<entry key="redirect_uri" value="http://192.168.1.138:8080/SocialSdkWeb/jsp/SocialFacebook.jsp" />
+						<entry key="redirect_uri" value="http://192.168.0.80:8080/SocialSdkWeb/jsp/SocialFacebook.jsp" />
 						<entry key="fbapiversion" value="v2.5" />
 						<entry key="scope" value="email,user_friends,publish_actions" />
 						<entry key="baseurl" value="https://www.facebook.com/" />

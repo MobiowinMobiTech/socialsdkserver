@@ -51,7 +51,7 @@ public class MailMoneyNotificationService implements IMailMoneyNotificationServi
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
 			helper.setFrom(templateMailMessage.getFrom());
-			helper.setTo("arun.jadhav@cmss.in");
+			helper.setTo("pradeep.yadav@cmss.in");
 			helper.setSubject(templateMailMessage.getSubject() + " " + "Mail Money Transfer");
 			helper.setText(String.format(templateMailMessage.getText(), "Arun", "Social Sdk Mail Money Channel"), true);
 			

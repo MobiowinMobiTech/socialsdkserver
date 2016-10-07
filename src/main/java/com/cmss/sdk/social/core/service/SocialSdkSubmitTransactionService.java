@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.cmss.sdk.social.commons.ApplicationConfiguration;
 import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
+import com.cmss.sdk.social.helper.service.IAccountDetailService;
 import com.cmss.sdk.social.helper.service.ITransactionService;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
@@ -31,6 +33,9 @@ public class SocialSdkSubmitTransactionService implements ISocialSdkService
 	@Autowired
 	private ApplicationConfiguration<String, HashMap<String, String>> applicationConfig;
 	
+	@Autowired
+	private IAccountDetailService accountDetailService;
+	
 	public Message<String> execute(Message<String> message)
 	{
 		log.info("Inside SocialSdkSubmitTransactionService / execute()");
@@ -42,12 +47,13 @@ public class SocialSdkSubmitTransactionService implements ISocialSdkService
 		JSONObject socialTransactionDataJson = null;
 		JSONObject transactionDetailsJson = null;
 		JSONObject authDataJson = null;
+		JSONArray transactionPartyDetails = null;
 		
 
 		HashMap<String, String> socialTransactionDataMap = null;
 
-		String socialFrndName, socialFrndId = null;
-		String accountIndexNo, transactionRemark,transactionAmount  = null;
+		String socialFrndName, custId, socialChannel, socialFrndshare, socialFrndId = null;
+		String transactionAccountId, transactionRemark, transactionType, transactionAmount  = null;
 		String bankCustomerId,authToken = null;
 		
 		try
@@ -57,11 +63,17 @@ public class SocialSdkSubmitTransactionService implements ISocialSdkService
 			transactionDetailsJson = socialTransactionDataJson.getJSONObject(ApplicationConstants.Keys.DATA);
 			authDataJson = socialTransactionDataJson.getJSONObject(ApplicationConstants.Keys.AUTH_DATA);
 			
-			socialFrndName = transactionDetailsJson.getString(ApplicationConstants.Keys.SOCIAL_FRIEND_NAME);
-			socialFrndId = transactionDetailsJson.getString(ApplicationConstants.Keys.SOCIAL_FRIEND_ID);
-			accountIndexNo = transactionDetailsJson.getString(ApplicationConstants.Keys.ACCOUNT_INDEX_ID);
+			transactionPartyDetails = transactionDetailsJson.getJSONArray("party");
+			
+			custId = transactionDetailsJson.getString(ApplicationConstants.Keys.CUST_BANK_ID);
+			socialChannel = transactionDetailsJson.getString(ApplicationConstants.Keys.CHANNEL);
+			socialFrndName = transactionPartyDetails.getJSONObject(0).getString(ApplicationConstants.Keys.SOCIAL_FRIEND_NAME);
+			socialFrndId = transactionPartyDetails.getJSONObject(0).getString(ApplicationConstants.Keys.SOCIAL_FRIEND_ID);
+			socialFrndshare = transactionPartyDetails.getJSONObject(0).getString("share");
+			transactionAccountId = transactionDetailsJson.getString(ApplicationConstants.Keys.ACCOUNT_INDEX_ID);
 			transactionRemark = transactionDetailsJson.getString(ApplicationConstants.Keys.TRANSACTION_REMARK);
 			transactionAmount = transactionDetailsJson.getString(ApplicationConstants.Keys.TRANSACTION_AMOUNT);
+			transactionType = transactionDetailsJson.getString(ApplicationConstants.Keys.TRANSACTIONTYPE);
 			
 			authToken = authDataJson.getString(ApplicationConstants.Keys.CUST_AUTH_TOKEN);
 			
@@ -70,39 +82,62 @@ public class SocialSdkSubmitTransactionService implements ISocialSdkService
 				log.info("Message Headers : " + messageHeaders);
 				log.info("Social Friend Name : " + socialFrndName);
 				log.info("Social Friend Id : " + socialFrndId);
-				log.info("Account Index No : " + accountIndexNo);
+				log.info("Social Friend share : " + socialFrndshare);
+				log.info("Account ID : " + transactionAccountId);
 				log.info("Transation Remark : " + transactionRemark);
 				log.info("Transation Amount : " + transactionAmount);
+				log.info("Transation Type : " + transactionType);
 				log.info("Auth Token : " + authToken);
+			}
+			
+			String socialCustId = transactionDetailsJson.getString(ApplicationConstants.Keys.CUST_BANK_ID);
+//			String socialCustId ="";
+			
+			HashMap<String, Object> custBankDetails = accountDetailService.getCustomerAccountDeatils(socialCustId);
+			
+			for(int i = 0; i < custBankDetails.size(); i++){
+				
 			}
 			
 			bankCustomerId = transactionService.getBankCustomerId(authToken);
 			
-			socialTransactionDataMap = getTransactionDataMap(socialFrndName,socialFrndId,accountIndexNo,transactionAmount,transactionRemark,bankCustomerId);
+			socialTransactionDataMap = getTransactionDataMap(socialFrndName,socialFrndId,transactionAccountId,transactionAmount,transactionRemark,bankCustomerId);
 			
 			String bankResponse = transactionService.validateCustomerTransactionData(socialTransactionDataMap);
 			
 			if(bankResponse.equals(ApplicationConstants.Keys.SUCCESS))
 			{
 				// Code for OTP handeled By CMSS 
+				String generateOTP = transactionService.generateTransactionOtp(socialTransactionDataMap);
 				
-				/*boolean isGenerate = transactionService.generateTransactionOtp(socialTransactionDataMap);
+				transactionService.sendTransactionOTPMail("",generateOTP);
 				
-				if(isGenerate)
-				{
-					String response = transactionService.genearteTransactionReponse();
+				String response = transactionService.genearteTransactionReponse(generateOTP);
+				
+				if(transactionType.equalsIgnoreCase("send")){
+					response = transactionService.getSendTransactionResponse(custId,socialChannel,transactionAccountId,transactionRemark,transactionAmount,transactionType,transactionPartyDetails);
+				}else if (transactionType.equalsIgnoreCase("recieve")){
+					response = transactionService.getRecieveTransactionResponse(custId,socialChannel,transactionAccountId,transactionRemark,transactionAmount,transactionType,transactionPartyDetails);
+				}else if (transactionType.equalsIgnoreCase("split")){
+					response = transactionService.getSplitTransactionResponse(custId,socialChannel,transactionAccountId,transactionRemark,transactionAmount,transactionType,transactionPartyDetails);
+				}
+				
+//				if(isGenerate)
+//				{
+//					String response = transactionService.genearteTransactionReponse();
 					
 					return MessageBuilder.withPayload(response).build();
-				}*/
+//				}
 				
-				String response = transactionService.genearteTransactionReponse();
+//				String response = transactionService.genearteTransactionReponse();
 				
-				return MessageBuilder.withPayload(response).build();
+//				return MessageBuilder.withPayload(response).build();
 			}
 			else
 			{
+				//TODO set proper response
 				String response = SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-						ApplicationConstants.Keys.INVALID_TRANSACTION_MSG));
+						ApplicationConstants.Keys.INVALID_TRANSACTION_MSG),"0");
 				
 				return MessageBuilder.withPayload(response).build();
 			}

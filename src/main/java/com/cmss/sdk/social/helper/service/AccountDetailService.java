@@ -100,7 +100,7 @@ public class AccountDetailService implements IAccountDetailService
 			// restTemplate.getForObject(uri, String.class, entity));
 
 			HttpPost postRequest = new HttpPost(
-					"http://localhost:8080/SocialSdkTestApp/rest/customerdetails/json/");
+					"http://localhost:9081/SocialSdkTestApp/rest/customerdetails/json/");
 			postRequest.addHeader("accept", "application/json");
 			
 		

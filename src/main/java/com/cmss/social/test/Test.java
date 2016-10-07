@@ -19,7 +19,7 @@ public class Test
 		String serverURL = "http://localhost:8080/SocialSdkServer/";
 		String servletUrl = "SocialSdkGateway";
 		/*
-		 * String serverURL = "http://localhost:8080/SocialSdkTestApp/"; String
+		 * String serverURL = "http://localhost:9081/SocialSdkTestApp/"; String
 		 * servletUrl = "MobileBankingServlet";
 		 */
 		String res;

@@ -44,7 +44,7 @@ public class BankTransactionRestService implements ITransactionRestService
 		try
 		{
 			HttpPost postRequest = new HttpPost(
-					"http://localhost:8080/SocialSdkTestApp/rest/validatedetails/validatetransaction/");
+					"http://localhost:9081/SocialSdkTestApp/rest/validatedetails/validatetransaction/");
 
 			postRequest.addHeader(
 					ApplicationConstants.Keys.REQUEST_ACCEPT_HEADER,
@@ -115,7 +115,7 @@ public class BankTransactionRestService implements ITransactionRestService
 		try
 		{
 			HttpPost postRequest = new HttpPost(
-					"http://localhost:8080/SocialSdkTestApp/rest/validatedetails/confirmtransaction/");
+					"http://localhost:9081/SocialSdkTestApp/rest/validatedetails/confirmtransaction/");
 
 			postRequest.addHeader(
 					ApplicationConstants.Keys.REQUEST_ACCEPT_HEADER,

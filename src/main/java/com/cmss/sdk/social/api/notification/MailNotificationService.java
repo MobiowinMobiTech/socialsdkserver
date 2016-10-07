@@ -14,6 +14,7 @@ import com.cmss.sdk.social.commons.ApplicationConfiguration;
 import com.cmss.sdk.social.commons.ApplicationConstants;
 import com.cmss.sdk.social.core.messaging.ISocialSdkService;
 import com.cmss.sdk.social.helper.service.IMailMoneyNotificationService;
+import com.cmss.sdk.social.utility.SendEmailSMTP;
 import com.cmss.sdk.social.utility.SocialSdkMsgUtil;
 
 @Service("mailNotificationService")
@@ -34,9 +35,22 @@ public class MailNotificationService implements ISocialSdkService
 		
 		try 
 		{
-			String mailSendRes = mailMoneyNotificationServicre.sendMailMoneyNotification();
+			//TODO fetch sender email address from db using custID
+			//TODO fetch template for sender from DB
+			String senderMailTemplate = "Dear , \nThank you for . It was our pleasure assisting you  application.\nHope to see you soon! \n\nThanks & Regards,\nSOCIAL SDK TEAM.\n\n(This is an auto generated email please do not reply to this id.)";
+			//TODO set dynamic data in template for sender from DB
+			//senders email address
+			SendEmailSMTP.sendMailByTemplate("pradeep.yadav@cmss.in","Code for mail payment confirmation", senderMailTemplate);
 			
-			log.info("Mail Money Response is : " + mailSendRes);
+			//TODO fetch beneficiary email address from request msg
+			//TODO fetch template for beneficiary from DB
+			String beneficiaryMailTemplate = "Dear , \n Your link to complete payment: http://192.168.0.80:9081/SocialSdkTestApp/jsp/beneficiary.jsp  \n\nThanks & Regards,\nSOCIAL SDK TEAM.\n\n(This is an auto generated email please do not reply to this id.)";
+			//TODO set dynamic data in template for sender from DB
+			//senders email address
+			SendEmailSMTP.sendMailByTemplate("pradeep.yadav@cmss.in","Beneficiary payment confirmation link", beneficiaryMailTemplate);
+			
+//			String mailSendRes = mailMoneyNotificationServicre.sendMailMoneyNotification();			
+//			log.info("Mail Money Response is : " + mailSendRes);
 			
 			String response = SocialSdkMsgUtil.createSuccessMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(ApplicationConstants.Keys.SUCCESS_TRANSACTION_MSG));
 			

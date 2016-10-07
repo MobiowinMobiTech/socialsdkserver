@@ -73,6 +73,12 @@ public class BankLoginHelperService implements IBankLoginHelperService
 		
 	}
 
+	public String getValidBankSocialChannelInfo(HashMap<String, String> bankSocialReqDataMap,
+			HashMap<String, String> customerTokenMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

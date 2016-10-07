@@ -42,7 +42,7 @@ public class LogoutService implements ILogoutService
 		else
 		{
 			return SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-					ApplicationConstants.Keys.FAILURE_ERR_MSG));
+					ApplicationConstants.Keys.FAILURE_ERR_MSG),"0");
 			
 		}
 		

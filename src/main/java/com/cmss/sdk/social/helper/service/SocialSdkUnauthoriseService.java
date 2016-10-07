@@ -29,9 +29,9 @@ public class SocialSdkUnauthoriseService implements ISocialSdkService
 	{
 		log.info("Inside SocialSdkUnauthoriseService/execute()");
 		
-		
+		//TODO set proper reror code
 		String response = SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-				ApplicationConstants.Keys.UNAUTHORISE_ERR_MSG));
+				ApplicationConstants.Keys.UNAUTHORISE_ERR_MSG),"0");
 		
 		return MessageBuilder.withPayload(response).build();
 	}

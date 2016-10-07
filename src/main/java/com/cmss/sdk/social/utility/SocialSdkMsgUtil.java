@@ -33,24 +33,26 @@ public class SocialSdkMsgUtil
 		}
 	}
 	
-	public static String createErrorMessage(String errMsg)
+	public static String createErrorMessage(String errMsg,String errCode)
 	{
 		try
 		{
-			Map<String, Object> errorMap = new HashMap<String, Object>();
+			Map<String, Object> errorBaseMap = new HashMap<String, Object>();
+			
 			Map<String,Object> errMsgMap = new HashMap<String, Object>();
+			errMsgMap.put(ApplicationConstants.Keys.ERR_CODE, errCode);
 			errMsgMap.put(ApplicationConstants.Keys.ERR_MSG, errMsg);
 			
-			List<Map<String, Object>> lists = new LinkedList<Map<String, Object>>();
+//			List<Map<String, Object>> lists = new LinkedList<Map<String, Object>>();
 
-			lists.add(errMsgMap);
+//			lists.add(errMsgMap);
 			
-			errorMap.put(ApplicationConstants.Keys.STATUS, ApplicationConstants.Keys.ERROR);
-			errorMap.put(ApplicationConstants.Keys.MESSAGE,String.valueOf(System.currentTimeMillis()));
-			errorMap.put(ApplicationConstants.Keys.DATA, lists);
+			errorBaseMap.put(ApplicationConstants.Keys.STATUS, ApplicationConstants.Value.FAILED);
+			errorBaseMap.put(ApplicationConstants.Keys.MESSAGE,String.valueOf(System.currentTimeMillis()));
+			errorBaseMap.put(ApplicationConstants.Keys.ERROR, errMsgMap);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			objectMapper.writeValue(baos, errorMap);
+			objectMapper.writeValue(baos, errorBaseMap);
 
 			return baos.toString();
 		} catch (Exception e)

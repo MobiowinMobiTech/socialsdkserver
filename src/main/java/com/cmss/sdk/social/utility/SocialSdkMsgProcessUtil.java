@@ -101,8 +101,10 @@ public class SocialSdkMsgProcessUtil
 		MessageChannel deviceResponseChannel = (MessageChannel) applicationContext
 				.getBean(ApplicationConstants.Keys.SOCIAL_SDK_OUTPUT_CHANNEL);
 		
+		//TODO SET ERROR code
+		
 		deviceResponseChannel.send(MessageBuilder
-				.withPayload(SocialSdkMsgUtil.createErrorMessage(errMsg))
+				.withPayload(SocialSdkMsgUtil.createErrorMessage("0",errMsg))
 				.setHeader(ApplicationConstants.Keys.RESPONSE, response).build());
 		
 	}

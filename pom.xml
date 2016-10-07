@@ -175,6 +175,20 @@
 			<version>3.2.2</version>
 		</dependency>
 
+		<!-- protobuf -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.protobuf-java-format</groupId>
+			<artifactId>protobuf-java-format</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+
+
 		<!-- Dependencies for Testing module <dependency> <groupId>junit</groupId> 
 			<artifactId>junit</artifactId> <version>4.12</version> <scope>test</scope> 
 			</dependency> <dependency> <groupId>org.testng</groupId> <artifactId>testng</artifactId> 

@@ -93,7 +93,7 @@ public class SocialSdkConfirmTransactionService implements ISocialSdkService
 			else
 			{
 				response = SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-						ApplicationConstants.Keys.INVALID_TRANSACTION_MSG));
+						ApplicationConstants.Keys.INVALID_TRANSACTION_MSG),"0");
 				
 				return MessageBuilder.withPayload(response).build();
 			}

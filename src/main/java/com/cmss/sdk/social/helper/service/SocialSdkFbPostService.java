@@ -42,17 +42,17 @@ public class SocialSdkFbPostService
 		{
 			StringBuilder urlBuilder = new StringBuilder();
 			//urlBuilder.append(applicationConfig.getValue(ApplicationConstants.FbStoryParams.FB_STORY_PARAM).get(ApplicationConstants.FbStoryParams.FB_GRAPH_URL));
-			urlBuilder.append("https://graph.facebook.com/v2.5/880452358730216/socialsdkarun:transfer?");
+			urlBuilder.append("https://graph.facebook.com/v2.5/172691086473365/social_sdk_test:transfer?");
 					//"";	
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(urlBuilder.toString());
 
 			List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-			urlParameters.add(new BasicNameValuePair("access_token", "EAAG2aRtEfGQBALAJuzZCPF1dEUZBvLLj3HxZAZBd0hSA1ALNdZCG9mLGXHnk6OpTPZBsYNG6nZAhBVKEYjLjO9NimoqSNgAFVUvEsfYirjRNINlotZBBuxZBpi0ZC7pZAja1whxv98n0M6WSbVyeQyZBuarzbl1pVs1WiBEZD"));
+			urlParameters.add(new BasicNameValuePair("access_token", "EAAaDvp7raBwBAFHF0xfZAkCdAzfKfYUChaeRGm7NoEuZAoxoutZAYhv5m1z0Va39SYtXPK4qlPqWw5eMPRvIsBHyjZBUoMwuGcVy6QAKbX300caPw1WESnmSv0f7nIDzYzUR7uhyfCYgj8QmFZBirBUMg1ITt56MZD"));
 			urlParameters.add(new BasicNameValuePair("fb:explicitly_shared","true"));
-			urlParameters.add(new BasicNameValuePair("money", "http://122.170.2.209:8086/FaceBookConnect/meta.html"));
-			urlParameters.add(new BasicNameValuePair("message","@[AaI__Z5BZ4P9AMmGzTxfEo2Um4Mu5zDxSpaViNaOGvTA49m4yPLTfRY7NaCdErYyCDV62pCYWrJdl3Qc4e4t6YRAWdHbYX4Meyel5MTSg3FGeA]"));
-			urlParameters.add(new BasicNameValuePair("tags","AaI__Z5BZ4P9AMmGzTxfEo2Um4Mu5zDxSpaViNaOGvTA49m4yPLTfRY7NaCdErYyCDV62pCYWrJdl3Qc4e4t6YRAWdHbYX4Meyel5MTSg3FGeA"));
+			urlParameters.add(new BasicNameValuePair("money", "http://45.117.72.18:8080/FaceBookConnect/meta.html"));
+			urlParameters.add(new BasicNameValuePair("message","@[AaJgvNGZh-1e4_MHz0pff1eK6jwrlyIi_DkP4FFvc3BO-QJM9huimdPTqtYuufwbB_W86zKaTaPSKy3ixQPcuC-bVECOn0VhY7UvTqDTBZnOEQ]"));
+			urlParameters.add(new BasicNameValuePair("tags","AaJgvNGZh-1e4_MHz0pff1eK6jwrlyIi_DkP4FFvc3BO-QJM9huimdPTqtYuufwbB_W86zKaTaPSKy3ixQPcuC-bVECOn0VhY7UvTqDTBZnOEQ"));
 			
 			post.setEntity(new UrlEncodedFormEntity(urlParameters));
 

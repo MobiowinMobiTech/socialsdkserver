@@ -5,16 +5,17 @@
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="port" value="465" />
+		<property name="port" value="587" />
 		<property name="host" value="smtp.gmail.com" />
-		<property name="username" value="arun.jadhav@cmss.in" />
-		<property name="password" value="i m the best91" />
+		<property name="username" value="phydercmss" />
+		<property name="password" value="phydercmss@4321" />
 		
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.debug">true</prop>
-				<prop key="mail.smtp.ssl.enable">true</prop>
-				<!-- <prop key="mail.smtp.starttls.enable">false</prop> -->
+				<prop key="mail.smtp.ssl.enable">false</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
 			</props>
 		</property>
 	</bean>

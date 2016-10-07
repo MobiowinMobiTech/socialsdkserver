@@ -31,7 +31,7 @@ public class SocialSdkFacebookService implements ISocialSdkService
 
 	public Message<String> execute(Message<String> message)
 	{
-		log.info("Inside SocialLoginService/execute()");
+		log.info("Inside SocialSdkFacebookService/execute()");
 		
 		String jsonData = message.getPayload();
 		

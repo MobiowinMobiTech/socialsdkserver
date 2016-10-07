@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class SocialSdkBankLoginService implements ISocialSdkService
 		String bankId, customerId = null;
 
 		HashMap<String, String> bankLoginReqDataMap = null;
-
+		
 		try
 		{
 			bankDataJson = new JSONObject(jsonData);
@@ -54,10 +54,8 @@ public class SocialSdkBankLoginService implements ISocialSdkService
 				log.info("Bank Information : " + bankDetailsJson);
 			}
 
-			
 			bankId = bankDetailsJson
 					.getString(ApplicationConstants.Keys.BANK_ID);
-			
 			customerId = bankDetailsJson
 					.getString(ApplicationConstants.Keys.CUST_BANK_ID);
 

@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
-import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -64,8 +64,8 @@ public class SocialBankingAuthService implements ISocialSdkService
 			
 			authToken = authDataJson.getString(ApplicationConstants.Keys.CUST_AUTH_TOKEN);
 			reqToken = authDataJson.getString(ApplicationConstants.Keys.CUST_REQ_TOKEN);
-			//authTokenExpiryDt = authDataJson.getString(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT);
-			channel = messageObj.getString(ApplicationConstants.Keys.CHANNEL);
+//			authTokenExpiryDt = authDataJson.getString(ApplicationConstants.Keys.CUST_AUTH_TOKEN_EXPIRY_DT);
+//			channel = messageObj.getString(ApplicationConstants.Keys.CHANNEL);
 			entity =  messageObj.getString(ApplicationConstants.Keys.ENTITY);
 			socialChannelType = userDetailsJson.getString(ApplicationConstants.Keys.CHANNEL);
 			
@@ -75,7 +75,7 @@ public class SocialBankingAuthService implements ISocialSdkService
 				log.info("Auth Token is : " + authToken);
 				log.info("Req Token is  : " + reqToken);
 				//log.info("Auth Token Expiry Date : " + authTokenExpiryDt);
-				log.info("Request Message type is -------------- > " + channel);
+//				log.info("Request Message type is -------------- > " + channel);
 				log.info("Request Message entity is ------------ > " + entity);
 				
 			}

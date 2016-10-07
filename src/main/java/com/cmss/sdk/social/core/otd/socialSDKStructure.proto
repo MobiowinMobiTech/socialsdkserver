@@ -1,0 +1,38 @@
+syntax = "proto2";
+package com.cmss.sdk.social.core.otd;
+
+message SocialLoginReq{	
+	required string bank_id = 1;
+}
+
+message SocialLoginRes{
+	message SocialLoginData{
+		message Params{
+			required string key = 1;
+			required string value = 2;
+		}
+		message ChannelList {
+			required string channel = 1;	
+			repeated Params params = 2;
+		}
+
+		repeated ChannelList channel_list = 1;
+		required string social_channel_id = 2;
+	}
+	
+	required SocialLoginData data = 1;
+	required string message = 2;
+	required string status = 3;
+}
+
+message SubmitTransactionRes{
+	message SubmitTransactionData{
+		required string key = 1;
+		required string value = 2;
+	}
+	
+	repeated SubmitTransactionData data = 1;
+	required string message = 2;
+	required string status = 3;
+}
+

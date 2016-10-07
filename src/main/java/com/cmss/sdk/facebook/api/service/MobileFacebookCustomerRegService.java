@@ -56,12 +56,16 @@ public class MobileFacebookCustomerRegService implements ISocialSdkService {
 
 		String socialUserId, socialUserToken = null;
 		String code = null;
+		
+		String module;
 
 		try {
 			socialLoginDataJson = new JSONObject(jsonData);
 
 			userSocialDataJson = socialLoginDataJson.getJSONObject(ApplicationConstants.Keys.DATA);
 
+			module = (String) messageHeaders.get(ApplicationConstants.Keys.REQUEST_MODULE);
+			
 			if (log.isInfoEnabled()) {
 				log.info("Message Headers : " + messageHeaders);
 				log.info("Customer Social Data   : " + userSocialDataJson);
@@ -71,9 +75,10 @@ public class MobileFacebookCustomerRegService implements ISocialSdkService {
 
 			if (log.isInfoEnabled()) {
 				log.info("Customer Facebook auth Code : " + code);
+				log.info("Module : " + module);
 			}
 
-			socialUserDataMap = getSocialUserDataMap(code);
+			socialUserDataMap = getSocialUserDataMap(code, module);
 
 			HashMap<String, String> customerAccessTokenMap = facebookDataHelperService
 					.fetchCustomerAccessToken(socialUserDataMap);
@@ -105,10 +110,11 @@ public class MobileFacebookCustomerRegService implements ISocialSdkService {
 		return null;
 	}
 
-	private HashMap<String, String> getSocialUserDataMap(String code) {
+	private HashMap<String, String> getSocialUserDataMap(String code, String module) {
 
 		HashMap<String, String> customerDataMap = new HashMap<String, String>();
 		customerDataMap.put(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE, code);
+		customerDataMap.put(ApplicationConstants.Keys.REQUEST_MODULE, module);
 
 		return customerDataMap;
 	}

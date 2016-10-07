@@ -43,11 +43,13 @@ public class SocialSdkWebCustRegService implements ISocialSdkService
 		try {
 				registerCustomerDataJson = new JSONObject(jsonData);
 				customerDataJson = registerCustomerDataJson.getJSONObject(ApplicationConstants.Keys.DATA);
+				String moduleName = (String) messageHeaders.get(ApplicationConstants.Keys.REQUEST_MODULE);
 
 				if (log.isInfoEnabled())
 				{
 					log.info("Message Headers : " + messageHeaders);
-					log.info("Customer Data   : " + customerDataJson);
+					log.info("Customer Data : " + customerDataJson);
+					log.info("Module Name : " + moduleName);
 				}
 				channel = customerDataJson.getString(ApplicationConstants.Keys.CHANNEL);
 				
@@ -56,9 +58,11 @@ public class SocialSdkWebCustRegService implements ISocialSdkService
 					log.info("Channel is : " + channel);
 				}
 				
+				String modulechannel = moduleName+"_"+channel;
 				return MessageBuilder.withPayload(message.getPayload())
 		   			.copyHeaders(message.getHeaders())
 					.setHeader(ApplicationConstants.Keys.CHANNEL,channel)
+					.setHeader(ApplicationConstants.Keys.MODULE_CHANNEL,modulechannel)
 					.build();
 		}
 		catch (JSONException e)

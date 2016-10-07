@@ -60,17 +60,21 @@ public class FacebookCustomerRegService implements ISocialSdkService {
 
 		String socialUserId, socialUserToken = null;
 		String custBankId, bankId, code = null;
-
+		String module;
+		
 		try {
 			socialLoginDataJson = new JSONObject(jsonData);
 
 			userSocialDataJson = socialLoginDataJson.getJSONObject(ApplicationConstants.Keys.DATA);
 			userDataJson = socialLoginDataJson.getJSONObject(ApplicationConstants.Keys.CUST_DATA);
 
+			module = (String) messageHeaders.get(ApplicationConstants.Keys.REQUEST_MODULE);
+			
 			if (log.isInfoEnabled()) {
 				log.info("Message Headers : " + messageHeaders);
 				log.info("Customer Data   : " + userDataJson);
 				log.info("Customer Social Data   : " + userSocialDataJson);
+				log.info("Module   : " + module);
 			}
 
 			code = userSocialDataJson.getString(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE);
@@ -83,7 +87,7 @@ public class FacebookCustomerRegService implements ISocialSdkService {
 				log.info("Bank Id : " + bankId);
 			}
 
-			socialUserDataMap = getSocialUserDataMap(code, custBankId, bankId);
+			socialUserDataMap = getSocialUserDataMap(code, custBankId, bankId, module);
 
 			HashMap<String, String> customerAccessTokenMap = facebookDataHelperService
 					.fetchCustomerAccessToken(socialUserDataMap);
@@ -116,12 +120,13 @@ public class FacebookCustomerRegService implements ISocialSdkService {
 		return null;
 	}
 
-	private HashMap<String, String> getSocialUserDataMap(String code, String custBankId, String bankId) {
+	private HashMap<String, String> getSocialUserDataMap(String code, String custBankId, String bankId, String module) {
 
 		HashMap<String, String> customerDataMap = new HashMap<String, String>();
 		customerDataMap.put(ApplicationConstants.FbApiKeys.FB_APP_AUTH_CODE, code);
 		customerDataMap.put(ApplicationConstants.Keys.CUST_BANK_ID, custBankId);
 		customerDataMap.put(ApplicationConstants.Keys.BANK_ID, bankId);
+		customerDataMap.put(ApplicationConstants.Keys.REQUEST_MODULE, module);
 
 		return customerDataMap;
 	}

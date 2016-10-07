@@ -30,7 +30,7 @@ public class UnAuthoriseCustomerService implements ISocialSdkService
 		log.info("Inside UnauthoriseWebLoginService/execute()");
 		
 		String response = SocialSdkMsgUtil.createErrorMessage(applicationConfig.getValue(ApplicationConstants.Keys.MESSAGE).get(
-				ApplicationConstants.Keys.INVALID_CUSTOMER_MSG));
+				ApplicationConstants.Keys.INVALID_CUSTOMER_MSG),"0");
 		
 		return MessageBuilder.withPayload(response).build();
 	}
