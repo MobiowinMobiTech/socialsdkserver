@@ -1,0 +1,53 @@
+SELECT 
+   111.1111 *
+    DEGREES(ACOS(COS(RADIANS(a.Latitude))
+         * COS(RADIANS(b.Latitude))
+         * COS(RADIANS(a.Longitude - b.Longitude))
+         + SIN(RADIANS(a.Latitude))
+         * SIN(RADIANS(b.Latitude)))) AS distance_in_km
+  FROM dual
+  
+  SELECT 
+   111.1111 *
+    DEGREES(ACOS(COS(RADIANS('26.449923'))
+         * COS(RADIANS('19.075984'))
+         * COS(RADIANS('80.331874' - '72.877656'))
+         + SIN(RADIANS('26.449923'))
+         * SIN(RADIANS('19.075984')))) AS distance_in_km
+  FROM dual
+  
+  Data for a :
+  26.449923
+  80.331874
+  
+  Data for b : 
+  19.075984
+  72.877656
+ 
+ 
+ 
+ ===============================================
+ 
+ CREATE FUNCTION `lat_lng_distance` (lat1 FLOAT, lng1 FLOAT, lat2 FLOAT, lng2 FLOAT)
+    RETURNS FLOAT
+    DETERMINISTIC
+    BEGIN
+        RETURN 6371 * 2 * ASIN(SQRT(
+            POWER(SIN((lat1 - abs(lat2)) * pi()/180 / 2),
+            2) + COS(lat1 * pi()/180 ) * COS(abs(lat2) *
+            pi()/180) * POWER(SIN((lng1 - lng2) *
+            pi()/180 / 2), 2) ));
+    END
+	
+	================================================
+CREATE FUNCTION `lat_lng_distance` (lat1 FLOAT, lng1 FLOAT, lat2 FLOAT, lng2 FLOAT)
+    RETURNS FLOAT
+    DETERMINISTIC
+    BEGIN
+        RETURN 6371 * 2 * ASIN(SQRT(
+            POWER(SIN(('26.449923' - abs('19.075984')) * pi()/180 / 2),
+            2) + COS('26.449923' * pi()/180 ) * COS(abs('19.075984') *
+            pi()/180) * POWER(SIN(('80.331874' - '72.877656') *
+            pi()/180 / 2), 2) ));
+    END
+	
